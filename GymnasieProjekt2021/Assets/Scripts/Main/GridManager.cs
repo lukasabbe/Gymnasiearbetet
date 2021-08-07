@@ -30,9 +30,29 @@ public static class GridManager{
         }
         return cells;
     }
+    public static void BuildStructure(Cell cell, StructureObject structure){
+        if (structure != null && !cell.occupied){
+            cell.occupied = true;
+
+            cell.structure = structure;
+            cell.structure.id = structure.id;           
+            cell.gameobject = GameObject.Instantiate(cell.structure.gameObject, cell.position, Quaternion.identity);
+        }
+    }
+    public static void DeconstructStructure(Cell cell){
+        if (cell.occupied){
+            cell.occupied = false;
+
+            GameObject.Destroy(cell.gameobject);
+            cell.structure.id = -1; // -1 = ingen structure
+            cell.structure = null;
+            cell.gameobject = null;
+        }
+    }
     public class Cell{ 
         public bool occupied = false;
         public StructureObject structure = null;
+        public GameObject gameobject = null;
 
         public Vector3 position = Vector3.zero;
         public Cell(Vector3 _position){
@@ -52,13 +72,14 @@ public static class GridManager{
             size = _size;
         }
     }
-    public static void BuildStructure(Cell cell, StructureObject structure){
-        if (structure != null && !cell.occupied){
-            cell.occupied = true;
-
-            cell.structure = structure;
-            GameObject.Instantiate(cell.structure.gameObject, cell.position, Quaternion.identity);
+    public static Cell GetCell(Vector3 position, Chunk chunk){
+        int iteration = -1;
+        for (int i = 0; i < chunk.cells.Count; i++){
+            if (chunk.cells[i].position == position)
+                iteration = i;
         }
+        if (iteration == -1) return null;
+        else return chunk.cells[iteration];
     }
     public static Chunk GetChunk(Vector3 position){
         int iteration = -1;
@@ -71,17 +92,6 @@ public static class GridManager{
         }
         if (iteration == -1) return null;
         else return chunks[iteration];
-    }
-    public static Cell GetCell(Vector3 position){
-        Chunk chunk = GetChunk(position);
-
-        int iteration = -1;
-        for (int i = 0; i < chunk.cells.Count; i++){
-            if (chunk.cells[i].position == position)
-                iteration = i;
-        }
-        if (iteration == -1) return null;
-        else return chunk.cells[iteration];
     }
 }
 
