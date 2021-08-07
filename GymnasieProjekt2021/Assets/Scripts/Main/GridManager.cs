@@ -52,8 +52,7 @@ public static class GridManager{
             size = _size;
         }
     }
-    public static void BuildStructure(Vector3 target, StructureObject structure){
-        Cell cell = GetCell(target);
+    public static void BuildStructure(Cell cell, StructureObject structure){
         if (structure != null && !cell.occupied){
             cell.occupied = true;
 
