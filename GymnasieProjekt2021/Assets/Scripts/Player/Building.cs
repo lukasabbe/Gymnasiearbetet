@@ -18,11 +18,7 @@ public class Building : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)){
             //GridManager.Cell cell = GridManager.GetCell(PointToGrid(target));
-            GridManager.BuildStructure(PointToGrid(target), structures.structures[0]);
-        }
-
-        if (Input.GetMouseButtonDown(0)){
-            Instantiate(testingPrefab, GridManager.GetChunk(target).position, Quaternion.identity);
+            GridManager.BuildStructure(GridManager.GetCell(PointToGrid(target)), structures.structures[0]);
         }
     }
     Vector3 PointToGrid(Vector3 point){
