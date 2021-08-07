@@ -15,12 +15,12 @@ public class Building : MonoBehaviour
         Physics.Raycast(camera.position, camera.forward, out RaycastHit ray, 10f, groundLayer);
         point = ray.point;
         target = point + (ray.normal * 0.5f);
-        /*
+
         if (Input.GetMouseButtonDown(0)){
-            GridManager.Cell cell = GridManager.GetCell(PointToGrid(target));
-            GridManager.BuildStructure(cell, structures.structures[0]);
+            //GridManager.Cell cell = GridManager.GetCell(PointToGrid(target));
+            GridManager.BuildStructure(PointToGrid(target), structures.structures[0]);
         }
-        */
+
         if (Input.GetMouseButtonDown(0)){
             Instantiate(testingPrefab, GridManager.GetChunk(target).position, Quaternion.identity);
         }

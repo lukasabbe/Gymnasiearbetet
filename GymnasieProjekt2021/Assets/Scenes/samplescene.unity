@@ -513,7 +513,7 @@ MonoBehaviour:
   player: {fileID: 1029376273}
   gridLength: 16
   gridHeight: 20
-  chunkLength: 50
+  chunkLength: 3
 --- !u!4 &992857392
 Transform:
   m_ObjectHideFlags: 0
