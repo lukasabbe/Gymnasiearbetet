@@ -10,9 +10,10 @@ public class GridManagerMono : MonoBehaviour {
         GridManager.gridHeight = gridHeight;
 
         GridManager.InitializeChunks(chunkLength, gridLength, gridHeight);
+
+        GridManager.LoadChunk(GridManager.GetChunk(GameManager.player.transform.position));
     }
-    private void FixedUpdate()
-    {
+    private void FixedUpdate(){
         GridManager.LoadChunks(GridManager.GetSorroundingChunks(GameManager.player.transform.position));
     }
     private void OnDrawGizmos() {
