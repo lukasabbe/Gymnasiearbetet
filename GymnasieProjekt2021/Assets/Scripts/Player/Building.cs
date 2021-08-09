@@ -2,51 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building : MonoBehaviour
-{
+public class Building : MonoBehaviour{
     public Structures structures;
 
-    Vector3 point, target, inverseTarget;
     public new Transform camera;
-    public LayerMask groundLayer;
 
-    public GameObject testingPrefab;
+    bool displayChunk = false;
     void Update(){
-        Physics.Raycast(camera.position, camera.forward, out RaycastHit ray, 10f, groundLayer);
+        if (Input.GetMouseButtonDown(0)) Build(ViewTarget());
+        if (Input.GetMouseButtonDown(1)) Remove(InverseViewTarget());
+    }
+    Vector3 ViewPoint(){
+        Physics.Raycast(camera.position, camera.forward, out RaycastHit ray, 10f, Layers.ground);
+
+        return ray.point;
+    }
+    Vector3 ViewTarget(){
+        Vector3 point, target;
+        Physics.Raycast(camera.position, camera.forward, out RaycastHit ray, 10f, Layers.ground);
+
         point = ray.point;
+        if (point == Vector3.zero) return Vector3.zero;
+
         target = point + (ray.normal * 0.5f);
-        inverseTarget = point + (ray.normal * -0.5f);
 
-        if (Input.GetMouseButtonDown(0)){
-            GridManager.Cell cell = GridManager.GetCell(PointToGrid(target), GridManager.GetChunk(target));
-            if (cell == null) return;
-            GridManager.BuildStructure(cell, structures.structures[0]);
-        }
-        if (Input.GetMouseButtonDown(1)){
-            GridManager.Cell cell = GridManager.GetCell(PointToGrid(inverseTarget), GridManager.GetChunk(inverseTarget));
-            if (cell == null) return;
-            GridManager.DeconstructStructure(cell);
-        }
+        return target;
+    } 
+    Vector3 InverseViewTarget(){
+        Vector3 point, target;
+        Physics.Raycast(camera.position, camera.forward, out RaycastHit ray, 10f, Layers.ground);
 
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            int cellsOccupied = 0;
-            List<int> cellTypes = new List<int>();
-            for(int i = 0; i < GridManager.GetChunk(transform.position).cells.Count; i++)
-            {
-                if(GridManager.GetChunk(transform.position).cells[i].occupied == true)
-                {
-                    cellsOccupied++;
-                    cellTypes.Add(i);
-                }
-            }
-            Debug.Log($"{cellsOccupied} cells are occupied in this chunk");
-            for(int i = 0; i < cellTypes.Count; i++)
-            {
-                Debug.Log($"Cell {i}'s position: {GridManager.GetChunk(transform.position).cells[i].position}");
-                Debug.Log($"Cell {i}'s id: {GridManager.GetChunk(transform.position).cells[i].structure.id}");
-            }
-        }
+        point = ray.point;
+        if (point == Vector3.zero) return Vector3.zero;
+
+        target = point + (ray.normal * -0.5f);
+
+        return target;
+    }
+    void Build(Vector3 target){
+        if (target == Vector3.zero) return;
+        GridManager.Cell cell = GridManager.GetCell(PointToGrid(target), GridManager.GetChunk(target));
+        if (cell == null) return;
+        GridManager.BuildStructure(cell, structures.structures[0]);
+    }
+    void Remove(Vector3 target){
+        if (target == Vector3.zero) return;
+        GridManager.Cell cell = GridManager.GetCell(PointToGrid(target), GridManager.GetChunk(target));
+        if (cell == null) return;
+        GridManager.RemoveStructure(cell);
     }
     Vector3 PointToGrid(Vector3 point){
         Vector3 pointToGrid;
@@ -55,10 +58,5 @@ public class Building : MonoBehaviour
         pointToGrid.z = Mathf.Round(point.z);
 
         return pointToGrid;
-    }
-    private void OnDrawGizmos(){
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(point, 0.2f);
-        Gizmos.DrawWireCube(PointToGrid(target), Vector3.one);
     }
 }

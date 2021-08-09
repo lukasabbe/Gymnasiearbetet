@@ -2,24 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
-{
-    public float movementSpeed = 12f;
-    public float jumpHeight = 2f;
+public class Movement : MonoBehaviour{
+    public float movementSpeed = 12f; 
+    public float jumpHeight = 2f; //Mäts i meter
 
+    [Space]
     public float gravity = -20f;
 
+    [Space]
     public Transform groundcheckTransform;
     public float groundcheckRadius;
-    public LayerMask groundMask;
     bool isGrounded;
 
     Vector3 velocity;
 
-    public CharacterController characterController;
-    void Update()
-    {
-        isGrounded = Physics.CheckSphere(groundcheckTransform.position, groundcheckRadius, groundMask);
+    CharacterController characterController;
+    private void Awake(){
+        characterController = GetComponent<CharacterController>();
+    }
+    void Update(){
+        isGrounded = Physics.CheckSphere(groundcheckTransform.position, groundcheckRadius, Layers.ground);
         if (isGrounded && velocity.y < 0) velocity.y = -2f;
 
         float xInput = Input.GetAxis("Horizontal");
@@ -27,14 +29,14 @@ public class Movement : MonoBehaviour
 
         Vector3 moveDirection = transform.right * xInput + transform.forward * zInput;
 
-        characterController.Move(moveDirection * movementSpeed);
+        characterController.Move(moveDirection * movementSpeed * Time.deltaTime);
+
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded) velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
         HandleGravity();
     }
-    void HandleGravity()
-    {
+    void HandleGravity(){
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
     }
