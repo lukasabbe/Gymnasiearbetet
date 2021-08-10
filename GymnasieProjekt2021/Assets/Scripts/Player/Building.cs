@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class Building : MonoBehaviour{
     public Structures structures;
-
     public new Transform camera;
 
-    bool displayChunk = false;
     void Update(){
         if (Input.GetMouseButtonDown(0)) Build(ViewTarget());
         if (Input.GetMouseButtonDown(1)) Remove(InverseViewTarget());
     }
     Vector3 ViewPoint(){
         Physics.Raycast(camera.position, camera.forward, out RaycastHit ray, 10f, Layers.ground);
-
         return ray.point;
     }
     Vector3 ViewTarget(){

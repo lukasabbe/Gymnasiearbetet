@@ -23,13 +23,18 @@ public class GridManagerMono : MonoBehaviour {
             for (int i = 0; i < GridManager.chunks.Count; i++){
                 if (GridManager.chunks[i].isLoaded)
                     Gizmos.color = Color.yellow;
-                else
+                else if (!GridManager.chunks[i].isLoaded)
                     Gizmos.color = Color.red;
                 Gizmos.DrawWireCube(GridManager.chunks[i].position, GridManager.chunks[i].size);
             }
 
-            /*
+            Gizmos.color = Color.green;
+            List<GridManager.Chunk> sorroundingChunks = GridManager.GetSorroundingChunks(GameManager.player.transform.position); 
+            for (int i = 0; i < sorroundingChunks.Count; i++){
+                Gizmos.DrawWireCube(sorroundingChunks[i].position, sorroundingChunks[i].size);
+            }
 
+            /*
             GridManager.Chunk[] chunks = GridManager.GetSorroundingChunks(GameManager.player.transform.position);
             for (int i = 0; i < chunks.Length; i++)
             {
