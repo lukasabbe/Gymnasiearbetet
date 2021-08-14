@@ -1,0 +1,25 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+public class PlayerInputEventManager : MonoBehaviour {
+
+    public event Action leftMouseButton;
+    public event Action rightMouseButton;
+    public event Action debugKey;
+
+    private void Update() {
+
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            leftMouseButton();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1)){
+            rightMouseButton();
+        }
+
+        if (Input.GetKeyDown(KeyCode.O)) {
+            debugKey();
+        }
+    }
+}

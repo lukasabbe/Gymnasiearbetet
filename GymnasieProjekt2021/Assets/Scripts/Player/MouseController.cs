@@ -18,7 +18,7 @@ public class MouseController : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * sensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
 
-        xRotation -= mouseY;
+        xRotation -= mouseY; // xRotation är rotation runt x axeln och ska inte förvirras med y rotation
         xRotation = Mathf.Clamp(xRotation, -90, 90);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
