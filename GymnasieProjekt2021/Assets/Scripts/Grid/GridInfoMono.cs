@@ -30,7 +30,6 @@ public class GridInfoMono : MonoBehaviour {
             for (int y = 0; y < GridInfo.regionLength; y++)
             {
                 GridInfo.GenerateCells(GridInfo.chunks[x, y]);
-                Debug.Log(GridInfo.chunks[x, y].position);
             }
         }
     }

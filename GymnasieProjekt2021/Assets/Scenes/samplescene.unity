@@ -174,7 +174,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  - {fileID: 2100000, guid: b91066ba77476ad4e98a04b812111fb6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1340,6 +1340,9 @@ MonoBehaviour:
   viewAngle: 20
   stage: 0
   agent: {fileID: 1873852256}
+  AIType: 1
+  Melee_attackDMG: 4
+  Melee_distanceToAttackMode: 10
 --- !u!1 &2035111233
 GameObject:
   m_ObjectHideFlags: 0
