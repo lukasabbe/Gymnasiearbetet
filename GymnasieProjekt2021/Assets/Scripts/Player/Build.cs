@@ -36,8 +36,7 @@ public class Build : MonoBehaviour{
     {
         
     }
-
-    RaycastHit ViewRay()
+    public static RaycastHit ViewRay()
     {
         Physics.Raycast(GameManager.playerCamera.transform.position, GameManager.playerCamera.transform.forward, out RaycastHit ray, 10f, Layers.ground);
         return ray;

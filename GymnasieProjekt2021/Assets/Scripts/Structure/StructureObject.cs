@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new structure", menuName = "structure")]
+[CreateAssetMenu(fileName = "Structure", menuName = "ScriptableObjects/New structure")]
 public class StructureObject : ScriptableObject
 {
     public int id = -1;

@@ -6,7 +6,9 @@ public class PlayerInputEventManager : MonoBehaviour {
 
     public event Action leftMouseButton;
     public event Action rightMouseButton;
+    public event Action inventoryKey;
     public event Action debugKey;
+    public event Action debugSpawnItemKey;
 
     private void Update() {
 
@@ -20,6 +22,16 @@ public class PlayerInputEventManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.O)) {
             debugKey();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            inventoryKey();
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            debugSpawnItemKey();
         }
     }
 }
