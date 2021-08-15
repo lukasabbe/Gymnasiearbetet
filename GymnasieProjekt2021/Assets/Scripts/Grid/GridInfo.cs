@@ -4,39 +4,17 @@ using UnityEngine;
 
 public static class GridInfo
 {
+
     public readonly static int chunkLength = 16; // Chunkens bredd mätt i celler måste vara ett jämnt tal
     public readonly static int chunkHeight = 32;
 
     public readonly static int regionLength = 8; // Regionens bredd mätt i chunks
 
-    public static readonly Vector3Int cellDimensions = Vector3Int.one;
     public static readonly Vector3 chunkDimensions = new Vector3(chunkLength, chunkHeight, chunkLength);
 
     public static Chunk[,] chunks;
 
     public static Dictionary<Vector3, Chunk> loadedChunks = new Dictionary<Vector3, Chunk>(); // Dictionaryn håller koll på laddade chunks
-
-    public static void GenerateCells(Chunk _chunk)
-    {
-        Cell[,,] cells = new Cell[chunkLength, chunkHeight, chunkLength];
-
-        float xOffset = _chunk.position.x - (chunkLength / 2); // Centrerar cellerna
-        float zOffset = _chunk.position.z - (chunkLength / 2);
-
-
-        for (int y = 0; y < chunkHeight; y++)
-        {
-            for (int x = 0; x < chunkLength; x++)
-            {
-                for (int z = 0; z < chunkLength; z++)
-                {
-                    cells[x, y, z] = new Cell(new Vector3Int(x + (int)xOffset, y, z + (int)zOffset)); // Initzialerar chunksen beroende på den tidagare kalkylerade offseten
-                }
-            }
-        }
-
-        _chunk.cells = cells;
-    }
 
     public static Chunk[,] GenerateChunks()
     {
@@ -58,25 +36,6 @@ public static class GridInfo
         }
 
         return chunks;
-    }
-
-    public static Cell GetCell(Vector3 _point)
-    {
-        Chunk _chunk = GetChunk(_point);
-        if (_chunk == null) return null;
-
-        for (int x = 0; x < chunkLength; x++)
-        {
-            for (int y = 0; y < chunkHeight; y++)
-            {
-                for (int z = 0; z < chunkLength; z++)
-                {
-                    if (_chunk.cells[x, y, z].position == _point) return _chunk.cells[x, y, z];
-                }
-            }
-        }
- 
-        return null;
     }
 
     public static Chunk GetChunk(Vector3 _point)
@@ -149,15 +108,6 @@ public static class GridInfo
         return sorroundingChunks;
     }
 
-    public static Vector3Int PointToGrid(Vector3 _point)
-    {
-        int pointX = Mathf.RoundToInt(_point.x);
-        int pointY = Mathf.RoundToInt(_point.y);
-        int pointZ = Mathf.RoundToInt(_point.z);
-
-        return new Vector3Int(pointX, pointY, pointZ);
-    }
-
     public class Chunk
     {
         public readonly Vector3 position = Vector3.zero;
@@ -165,16 +115,82 @@ public static class GridInfo
 
         public readonly Vector3Int coordinates = Vector3Int.zero;
 
-        public Cell[,,] cells = new Cell[chunkHeight, chunkLength, chunkLength];
-        public List<Cell> activeCells = new List<Cell>();
+        public List<StructureObject> structures = new List<StructureObject>();
 
         public Chunk(Vector3 _position, Vector3Int _coordinates)
         {
             position = _position;
-
             coordinates = _coordinates;
         }
     }
+
+    /*
+    public static void GenerateCells(Chunk _chunk)
+    {
+        Cell[,,] cells = new Cell[chunkLength, chunkHeight, chunkLength];
+
+        float xOffset = _chunk.position.x - (chunkLength / 2); // Centrerar cellerna
+        float zOffset = _chunk.position.z - (chunkLength / 2);
+
+
+        for (int y = 0; y < chunkHeight; y++)
+        {
+            for (int x = 0; x < chunkLength; x++)
+            {
+                for (int z = 0; z < chunkLength; z++)
+                {
+                    cells[x, y, z] = new Cell(new Vector3Int(x + (int)xOffset, y, z + (int)zOffset)); // Initzialerar chunksen beroende på den tidagare kalkylerade offseten
+                }
+            }
+        }
+
+        _chunk.cells = cells;
+    }
+
+public static Cell GetCell(Vector3 _point)
+{
+    Chunk _chunk = GetChunk(_point);
+    if (_chunk == null) return null;
+
+    for (int x = 0; x < chunkLength; x++)
+    {
+        for (int y = 0; y < chunkHeight; y++)
+        {
+            for (int z = 0; z < chunkLength; z++)
+            {
+                if (_chunk.cells[x, y, z].position == _point) return _chunk.cells[x, y, z];
+            }
+        }
+    }
+
+    return null;
+}
+public static Cell[] GetCells(Cell _cell, Vector3Int _cellDimensions)
+{
+    List<Cell> cells = new List<Cell>();
+
+    for (int x = 0; x < _cellDimensions.x; x++)
+    {
+        for (int y = 0; y < _cellDimensions.y; y++)
+        {
+            for (int z = 0; z < _cellDimensions.z; z++)
+            {
+                cells.Add(GetCell(_cell.position + new Vector3Int(_cellDimensions.x, _cellDimensions.y, _cellDimensions.z)));
+            }
+        }
+    }
+
+    return cells.ToArray();
+}
+
+public static Vector3Int PointToGrid(Vector3 _point)
+{
+    int pointX = Mathf.RoundToInt(_point.x);
+    int pointY = Mathf.RoundToInt(_point.y);
+    int pointZ = Mathf.RoundToInt(_point.z);
+
+    return new Vector3Int(pointX, pointY, pointZ);
+}
 
     public static class CellStates
     {
@@ -197,4 +213,6 @@ public static class GridInfo
             position = _position;
         }
     }
+
+    */
 }

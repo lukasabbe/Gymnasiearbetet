@@ -4,141 +4,121 @@ using UnityEngine;
 using System;
 
 public class Build : MonoBehaviour{
-    public Structures structures;
+    public StructureObject structure;
+    RaycastHit buildRay, removeRay;
+
+    public float rotationMultiplier = 5f;
+    float rotationDelta = 0f;
+
+    Vector3 buildPosition = new Vector3();
+    Quaternion buildRotation = new Quaternion();
+
     private void Start()
     {
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
 
         input.leftMouseButton += OnLeftClick;
         input.rightMouseButton += OnRightClick;
-        input.debugKey += OnDebugKey;
+        input.scroll += OnScrollDelta;
+    }
+
+    private void Update()
+    {
+        buildRay = ViewRay(Layers.ground);
+        removeRay = ViewRay(Layers.structure);
+        ShowPreview(buildRay, structure);
+
+        buildPosition = GetInstantiatePoint(buildRay, structure);
+        buildRotation = Quaternion.Euler(0, rotationDelta, 0);
     }
 
     void OnLeftClick()
     {
-        RaycastHit ray = ViewRay();
-        if (ray.point == Vector3.zero) return;
+        if (buildRay.point == Vector3.zero) return;
+        if (!ValidPosition(GetInstantiatePoint(buildRay, structure), structure) || !ValidRotation(buildRay)) return;
 
-        GridInfo.Cell cell = GridInfo.GetCell(GridInfo.PointToGrid(ray.point + ray.normal.normalized * 0.5f));
-        BuildStructure(cell, structures.structures[0]);
+        BuildStructure(buildRay, structure);
     }
 
     void OnRightClick()
     {
-        RaycastHit ray = ViewRay();
-        if (ray.point == Vector3.zero) return;
-
-        GridInfo.Cell cell = GridInfo.GetCell(GridInfo.PointToGrid(ray.point + ray.normal.normalized * -0.5f));
-        RemoveStructure(cell);
+        if (removeRay.point == Vector3.zero) return;
+        RemoveStructure(removeRay);
+    }
+  
+    void OnScrollDelta()
+    {
+        rotationDelta += rotationMultiplier * Input.mouseScrollDelta.y;
     }
 
-    void OnDebugKey()
+    public static RaycastHit ViewRay(LayerMask _layer)
     {
-        
-    }
-    public static RaycastHit ViewRay()
-    {
-        Physics.Raycast(GameManager.playerCamera.transform.position, GameManager.playerCamera.transform.forward, out RaycastHit ray, 10f, Layers.ground);
+        Physics.Raycast(GameManager.playerCamera.transform.position, GameManager.playerCamera.transform.forward, out RaycastHit ray, 10f, _layer);
         return ray;
     }
 
-    void BuildStructure(GridInfo.Cell _cell, StructureObject _structure)
+    GameObject preview = null;
+    public Material validMaterial, invalidMaterial;
+    void ShowPreview(RaycastHit _ray, StructureObject _structure)
     {
-        if (_cell == null) return;
-        if (_cell.occupationState != GridInfo.CellStates.OccupationState.empty) return;
+        if (preview == null)
+        {
+            preview = Instantiate(_structure.gameObject, buildPosition, buildRotation);
+            preview.layer = 1 << 0;
 
-        _cell.structure = _structure;
-        _cell.gameObject = Instantiate(_structure.gameObject, _cell.position, Quaternion.identity);
+            preview.GetComponent<Collider>().enabled = false;
+        }
 
-        _cell.occupationState = GridInfo.CellStates.OccupationState.occupied;
-    }
-
-    void RemoveStructure(GridInfo.Cell _cell)
-    {
-        if (_cell == null) return;
-
-        Vector3 _cellPosition = _cell.position;
-
-        _cell.structure = null;
-        Destroy(_cell.gameObject);
-
-        _cell.occupationState = GridInfo.CellStates.OccupationState.empty;
-    }
-
-    public static void ReplaceStructure(GridInfo.Cell _cell, GameObject gameObject)
-    {
-        Destroy(_cell.gameObject);
-        _cell.gameObject = Instantiate(gameObject, _cell.position, Quaternion.identity);
-    }
-
-    /*
-    void Update(){
-        if (Input.GetMouseButtonDown(0)){
-            Build(ViewTarget());
-            GridManager.Chunk chunk = GridManager.GetChunk(ViewTarget());
-            for (int i = 0; i < chunk.cells.Count; i++){
-                if (chunk.cells[i].isOccupied){
-                    chunk.cells[i].isUpdated = false;
-                    GridManager.UpdateCellVariant(chunk.cells[i]);
-                }
+        if (preview.activeSelf)
+        {
+            if (ValidPosition(buildPosition, _structure) && ValidRotation(_ray))
+            {
+                preview.GetComponent<Renderer>().material = validMaterial;
+            }
+            else
+            {
+                preview.GetComponent<Renderer>().material = invalidMaterial;
             }
         }
-        if (Input.GetMouseButtonDown(1)){
-            Remove(InverseViewTarget());
-            GridManager.Chunk chunk = GridManager.GetChunk(InverseViewTarget());
-            for (int i = 0; i < chunk.cells.Count; i++){
-                if (chunk.cells[i].isOccupied){
-                    chunk.cells[i].isUpdated = false;
-                    GridManager.UpdateCellVariant(chunk.cells[i]);
-                }
-            }
+
+        if (_ray.point == Vector3.zero)
+        {
+            preview.SetActive(false);
+        }
+        else
+        {
+            preview.SetActive(true);
+
+            preview.transform.position = buildPosition;
+            preview.transform.rotation = buildRotation;
         }
     }
-    Vector3 ViewPoint(){
-        Physics.Raycast(camera.position, camera.forward, out RaycastHit ray, 10f, Layers.ground);
-        return ray.point;
+
+    bool ValidPosition(Vector3 _instantiationPoint, StructureObject _structure)
+    {
+        return !Physics.CheckBox(_instantiationPoint, _structure.Dimensions / 2, buildRotation, Layers.structure);
     }
-    Vector3 ViewTarget(){
-        Vector3 point, target;
-        Physics.Raycast(camera.position, camera.forward, out RaycastHit ray, 10f, Layers.ground);
 
-        point = ray.point;
-        if (point == Vector3.zero) return Vector3.zero;
-
-        target = point + (ray.normal * 0.5f);
-
-        return target;
-    } 
-    Vector3 InverseViewTarget(){
-        Vector3 point, target;
-        Physics.Raycast(camera.position, camera.forward, out RaycastHit ray, 10f, Layers.ground);
-
-        point = ray.point;
-        if (point == Vector3.zero) return Vector3.zero;
-
-        target = point + (ray.normal * -0.5f);
-
-        return target;
+    bool ValidRotation(RaycastHit _ray)
+    {
+        return Vector3.Dot(transform.up, _ray.normal) > 0.95f;
     }
-    void Build(Vector3 target){
-        if (target == Vector3.zero) return;
-        GridManager.Cell cell = GridManager.GetCell(PointToGrid(target), GridManager.GetChunk(target));
-        if (cell == null) return;
-        GridManager.BuildStructure(cell, structures.structures[0]);
-    }
-    void Remove(Vector3 target){
-        if (target == Vector3.zero) return;
-        GridManager.Cell cell = GridManager.GetCell(PointToGrid(target), GridManager.GetChunk(target));
-        if (cell == null) return;
-        GridManager.RemoveStructure(cell);
-    }
-    Vector3 PointToGrid(Vector3 point){
-        Vector3 pointToGrid;
-        pointToGrid.x = Mathf.Round(point.x);
-        pointToGrid.y = Mathf.Round(point.y);
-        pointToGrid.z = Mathf.Round(point.z);
 
-        return pointToGrid;
+    Vector3 GetInstantiatePoint(RaycastHit _ray, StructureObject _structure)
+    {
+        return _ray.point + (Vector3.up * _structure.Dimensions.y / 2);
     }
-    */ //Gammal kod 
+
+    void BuildStructure(RaycastHit _ray , StructureObject _structure)
+    {
+        Vector3 instantiationPoint = GetInstantiatePoint(_ray, _structure);
+        Instantiate(_structure.gameObject, instantiationPoint, buildRotation);
+
+        GridInfo.GetChunk(buildPosition).structures.Add(_structure);
+    }
+
+    void RemoveStructure(RaycastHit _ray)
+    {
+        Destroy(_ray.transform.gameObject);
+    }
 }
