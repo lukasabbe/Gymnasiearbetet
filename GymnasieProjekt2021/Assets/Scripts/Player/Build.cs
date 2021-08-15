@@ -45,7 +45,7 @@ public class Build : MonoBehaviour{
         if (removeRay.point == Vector3.zero) return;
         RemoveStructure(removeRay);
     }
-
+  
     void OnScrollDelta()
     {
         rotationDelta += rotationMultiplier * Input.mouseScrollDelta.y;
