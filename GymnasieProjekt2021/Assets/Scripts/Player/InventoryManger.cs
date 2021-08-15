@@ -32,7 +32,7 @@ public class InventoryManger : MonoBehaviour
     void spawnTestItem()
     {
         Debug.Log("spawned Item");
-        RaycastHit ray =  Build.ViewRay();
+        RaycastHit ray =  Build.ViewRay(Layers.ground);
         GameObject g =  Instantiate(BasicItem, new Vector3(ray.point.x , 1 , ray.point.z) ,Quaternion.identity);
         g.AddComponent(typeof(ItemGame));
         g.GetComponent<ItemGame>().Item = testItem;
