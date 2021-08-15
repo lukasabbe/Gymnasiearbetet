@@ -21,6 +21,10 @@ public class Movement : MonoBehaviour{
         characterController = GetComponent<CharacterController>();
     }
     void Update(){
+        movementUppdate();
+    }
+    void movementUppdate()
+    {
         isGrounded = Physics.CheckSphere(groundcheckTransform.position, groundcheckRadius, Layers.ground);
         if (isGrounded && velocity.y < 0) velocity.y = -2f;
 

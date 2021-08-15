@@ -15,6 +15,10 @@ public class MouseController : MonoBehaviour
     }
     void Update()
     {
+        if (MovmentStates.States != MovementState.off) mouse();
+    }
+    void mouse()
+    {
         float mouseX = Input.GetAxis("Mouse X") * sensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
 
