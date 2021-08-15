@@ -5,34 +5,10 @@ using System;
 
 public class GridInfoMono : MonoBehaviour {
     public bool debugChunks = true;
-    public bool debugCells = true;
-
-    public event Action onChunkEntered;
-    GridInfo.Chunk currentChunk;
 
     private void Awake()
     {
         GridInfo.chunks = GridInfo.GenerateChunks();
-        currentChunk = GridInfo.GetChunk(GameManager.player.transform.position);
-
-        InitializeChunks();
-    }
-
-    private void Update()
-    {
-        
-    }
-
-    void InitializeChunks() // Ger alla chunks celler
-    {
-        for(int x = 0; x < GridInfo.regionLength; x++)
-        {
-            for (int y = 0; y < GridInfo.regionLength; y++)
-            {
-                GridInfo.GenerateCells(GridInfo.chunks[x, y]);
-                Debug.Log(GridInfo.chunks[x, y].position);
-            }
-        }
     }
     private void OnDrawGizmos()
     {

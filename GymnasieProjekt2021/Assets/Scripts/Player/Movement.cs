@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour{
         characterController = GetComponent<CharacterController>();
     }
     void Update(){
-        isGrounded = Physics.CheckSphere(groundcheckTransform.position, groundcheckRadius, Layers.ground);
+        isGrounded = Physics.CheckSphere(groundcheckTransform.position, groundcheckRadius, Layers.ground | Layers.structure);
         if (isGrounded && velocity.y < 0) velocity.y = -2f;
 
         float xInput = Input.GetAxis("Horizontal");

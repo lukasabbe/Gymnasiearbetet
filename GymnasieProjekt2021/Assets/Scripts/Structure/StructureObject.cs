@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new structure", menuName = "structure")]
 public class StructureObject : ScriptableObject
 {
-    public int id = -1;
+    [HideInInspector] public Vector3 position;
+    [HideInInspector] public Vector3 rotation;
+    public Vector3 Dimensions;
+
     public GameObject gameObject;
 }
