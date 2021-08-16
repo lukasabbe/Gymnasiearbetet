@@ -8,7 +8,7 @@ public static class GridInfo
     public readonly static int chunkLength = 16; // Chunkens bredd mätt i celler måste vara ett jämnt tal
     public readonly static int chunkHeight = 32;
 
-    public readonly static int regionLength = 8; // Regionens bredd mätt i chunks
+    public readonly static int regionLength = 8;// Regionens bredd mätt i chunks
 
     public static readonly Vector3 chunkDimensions = new Vector3(chunkLength, chunkHeight, chunkLength);
 

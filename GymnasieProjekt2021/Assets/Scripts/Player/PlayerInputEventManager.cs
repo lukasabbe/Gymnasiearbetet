@@ -8,7 +8,7 @@ public class PlayerInputEventManager : MonoBehaviour {
     public event Action rightMouseButton;
     public event Action inventoryKey;
     public event Action scroll;
-    public event Action debugKey;
+    public event Action jumpKey;
     public event Action debugSpawnItemKey;
 
     private void Update() {
@@ -26,13 +26,14 @@ public class PlayerInputEventManager : MonoBehaviour {
             scroll();
         }
 
-        if (Input.GetKeyDown(KeyCode.O)) {
-            debugKey();
-        }
-
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             inventoryKey();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpKey();
         }
 
         if (Input.GetKeyDown(KeyCode.P))

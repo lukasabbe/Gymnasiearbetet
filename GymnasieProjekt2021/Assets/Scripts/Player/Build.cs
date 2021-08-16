@@ -7,6 +7,9 @@ public class Build : MonoBehaviour{
     public StructureObject structure;
     RaycastHit buildRay, removeRay;
 
+    [Range(0, 1)]
+    public float maxBuildAngle = 0f;
+
     public float rotationMultiplier = 5f;
     float rotationDelta = 0f;
 
@@ -57,6 +60,8 @@ public class Build : MonoBehaviour{
         return ray;
     }
 
+    public GameObject Debug = null;
+
     GameObject preview = null;
     public Material validMaterial, invalidMaterial;
     void ShowPreview(RaycastHit _ray, StructureObject _structure)
@@ -69,8 +74,20 @@ public class Build : MonoBehaviour{
             preview.GetComponent<Collider>().enabled = false;
         }
 
+        if (_ray.point == Vector3.zero)
+        {
+            preview.SetActive(false);
+        }
+        else
+        {
+            preview.SetActive(true);
+        }
+
         if (preview.activeSelf)
         {
+            preview.transform.position = buildPosition;
+            preview.transform.rotation = buildRotation;
+
             if (ValidPosition(buildPosition, _structure) && ValidRotation(_ray))
             {
                 preview.GetComponent<Renderer>().material = validMaterial;
@@ -79,18 +96,6 @@ public class Build : MonoBehaviour{
             {
                 preview.GetComponent<Renderer>().material = invalidMaterial;
             }
-        }
-
-        if (_ray.point == Vector3.zero)
-        {
-            preview.SetActive(false);
-        }
-        else
-        {
-            preview.SetActive(true);
-
-            preview.transform.position = buildPosition;
-            preview.transform.rotation = buildRotation;
         }
     }
 
@@ -101,7 +106,7 @@ public class Build : MonoBehaviour{
 
     bool ValidRotation(RaycastHit _ray)
     {
-        return Vector3.Dot(transform.up, _ray.normal) > 0.95f;
+        return Vector3.Dot(transform.up, _ray.normal) > maxBuildAngle;
     }
 
     Vector3 GetInstantiatePoint(RaycastHit _ray, StructureObject _structure)
@@ -114,7 +119,7 @@ public class Build : MonoBehaviour{
         Vector3 instantiationPoint = GetInstantiatePoint(_ray, _structure);
         Instantiate(_structure.gameObject, instantiationPoint, buildRotation);
 
-        GridInfo.GetChunk(buildPosition).structures.Add(_structure);
+        if (GridInfo.GetChunk(buildPosition) != null) GridInfo.GetChunk(buildPosition).structures.Add(_structure);
     }
 
     void RemoveStructure(RaycastHit _ray)
