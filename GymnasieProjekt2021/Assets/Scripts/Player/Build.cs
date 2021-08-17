@@ -34,6 +34,7 @@ public class Build : MonoBehaviour{
 
     void OnLeftClick()
     {
+        if (MovmentStates.States == MovementState.off) return;
         if (buildRay.point == Vector3.zero) return;
         if (!ValidPosition(GetInstantiatePoint(buildRay, structure), structure) || !ValidRotation(buildRay)) return;
 
@@ -42,6 +43,7 @@ public class Build : MonoBehaviour{
 
     void OnRightClick()
     {
+        if (MovmentStates.States == MovementState.off) return;
         if (removeRay.point == Vector3.zero) return;
         RemoveStructure(removeRay);
     }

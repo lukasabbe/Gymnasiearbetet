@@ -13,8 +13,7 @@ public class ItemGame : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<InventoryManger>().items.Add((Item)Item);
-            Debug.Log(other.GetComponent<InventoryManger>().items.Count);
+            other.GetComponent<InventoryManger>().addItemToInvetory((Item)Item);
             Destroy(gameObject);
         }
     }
