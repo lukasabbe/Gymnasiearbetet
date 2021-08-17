@@ -52,9 +52,9 @@ public class Build : MonoBehaviour{
     }
 
     void OnRightClick(){
-        if (removeRay.point == Vector3.zero) return;
-
         removeRay = ViewRay(Layers.structure);
+
+        if (removeRay.point == Vector3.zero) return;
         RemoveStructure(removeRay);
     }
   
@@ -80,5 +80,11 @@ public class Build : MonoBehaviour{
 
     void RemoveStructure(RaycastHit _ray){
         Destroy(_ray.transform.gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(removeRay.point, 0.2f);
     }
 }
