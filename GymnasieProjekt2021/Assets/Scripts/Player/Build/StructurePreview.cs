@@ -13,12 +13,9 @@ public static class StructurePreview{
             preview.GetComponent<Collider>().enabled = false;
         }
 
-        if (_ray.point == Vector3.zero){
-            preview.SetActive(false);
-        }
-        else{
-            preview.SetActive(true);
-        }
+        bool isActive = _ray.point == Vector3.zero ? false : true;
+        if (isActive )
+
 
         if (preview.activeSelf){
             preview.transform.position = _buildPosition;
