@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GridInfo
-{
+public static class GridInfo{
 
-    public readonly static int chunkLength = 16; // Chunkens bredd mätt i celler måste vara ett jämnt tal
-    public readonly static int chunkHeight = 32;
+    public static int chunkLength = 16; // Chunkens bredd mätt i celler måste vara ett jämnt tal
+    public static int chunkHeight = 32;
 
-    public readonly static int regionLength = 8; // Regionens bredd mätt i chunks
+    public static int regionLength = 8;// Regionens bredd mätt i chunks
 
-    public static readonly Vector3 chunkDimensions = new Vector3(chunkLength, chunkHeight, chunkLength);
+    public static Vector3 chunkDimensions = new Vector3(regionLength, chunkHeight, chunkLength);
 
     public static Chunk[,] chunks;
 
@@ -20,11 +19,8 @@ public static class GridInfo
     {
         Chunk[,] chunks = new Chunk[regionLength, regionLength];
 
-        float xOffset = regionLength * chunkLength / 2 - chunkLength / 2; // Centrerar chunksen med +-0.5 skillnad
-        float zOffset = regionLength * chunkLength / 2 - chunkLength / 2;
-        xOffset = chunkLength % 2 == 0 ? xOffset += 0.5f : xOffset; // Tar bort skillnaden beroende op om talet är jämnt eller ej
-        zOffset = chunkLength % 2 == 0 ? zOffset += 0.5f : zOffset;
-
+        float xOffset = regionLength * chunkLength / 2;
+        float zOffset = regionLength * chunkLength / 2;
         float yOffset = chunkHeight % 2 == 0 ? -0.5f : 0;
 
         for (int x = 0; x < regionLength; x++)
@@ -108,12 +104,11 @@ public static class GridInfo
         return sorroundingChunks;
     }
 
-    public class Chunk
-    {
-        public readonly Vector3 position = Vector3.zero;
-        public readonly Vector3 dimensions = chunkDimensions;
+    public class Chunk{
 
-        public readonly Vector3Int coordinates = Vector3Int.zero;
+        public Vector3 position { get; }
+        public Vector3 dimensions { get; }
+        public Vector3Int coordinates { get; }
 
         public List<StructureObject> structures = new List<StructureObject>();
 
@@ -121,6 +116,7 @@ public static class GridInfo
         {
             position = _position;
             coordinates = _coordinates;
+            dimensions = chunkDimensions;
         }
     }
 

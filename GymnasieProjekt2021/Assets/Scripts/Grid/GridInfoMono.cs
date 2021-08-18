@@ -6,25 +6,34 @@ using System;
 public class GridInfoMono : MonoBehaviour {
     public bool debugChunks = true;
 
-    private void Awake()
+    public int length, height;
+    public int regionLength;
+    private void OnValidate()
     {
+        regionLength = regionLength <= 0 ? 1 : regionLength;
+
+        GridInfo.regionLength = regionLength;
+        GridInfo.chunkLength = length;
+        GridInfo.chunkHeight = height;
+        GridInfo.chunkDimensions = new Vector3(length, height, length);
+
         GridInfo.chunks = GridInfo.GenerateChunks();
     }
     private void OnDrawGizmos()
     {
-        if (Application.isPlaying)
+        if (debugChunks)
         {
-            if (debugChunks)
+            Gizmos.color = Color.red;
+            for (int x = 0; x < GridInfo.regionLength; x++)
             {
-                Gizmos.color = Color.red;
-                for (int x = 0; x < GridInfo.regionLength; x++)
+                for (int z = 0; z < GridInfo.regionLength; z++)
                 {
-                    for (int z = 0; z < GridInfo.regionLength; z++)
-                    {
-                        Gizmos.DrawWireCube(GridInfo.chunks[x, z].position, GridInfo.chunks[x, z].dimensions);
-                    }
+                    Gizmos.DrawWireCube(GridInfo.chunks[x, z].position, GridInfo.chunks[x, z].dimensions);
                 }
+            }
 
+            if (Application.isPlaying)
+            {
                 GridInfo.Chunk[] sorroundingChunks = GridInfo.GetNeighbouringChunks(GameManager.player.transform.position);
                 if (sorroundingChunks != null)
                 {

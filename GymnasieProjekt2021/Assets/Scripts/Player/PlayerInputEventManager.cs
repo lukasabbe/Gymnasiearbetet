@@ -10,6 +10,7 @@ public class PlayerInputEventManager : MonoBehaviour {
     public event Action scroll;
     public event Action debugKey;
     public event Action debugSpawnItemKey;
+    public event Action jumpKey;
 
     private void Update() {
 
@@ -38,6 +39,11 @@ public class PlayerInputEventManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.P))
         {
             debugSpawnItemKey();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpKey();
         }
     }
 }

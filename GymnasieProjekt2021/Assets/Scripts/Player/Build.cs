@@ -1,11 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
 public class Build : MonoBehaviour{
+
+    static Build build;
+
     public StructureObject structure;
+
     RaycastHit buildRay, removeRay;
+
+    public float maxBuildAngle = 0f;
+    public float maxBuildDistance = 0f;
 
     public float rotationMultiplier = 5f;
     float rotationDelta = 0f;
@@ -13,8 +17,11 @@ public class Build : MonoBehaviour{
     Vector3 buildPosition = new Vector3();
     Quaternion buildRotation = new Quaternion();
 
-    private void Start()
-    {
+    public Material validMaterial, invalidMaterial;
+
+    private void Start(){
+        build = this;
+
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
 
         input.leftMouseButton += OnLeftClick;
@@ -22,105 +29,56 @@ public class Build : MonoBehaviour{
         input.scroll += OnScrollDelta;
     }
 
-    private void Update()
-    {
+    private void Update(){
         buildRay = ViewRay(Layers.ground);
-        removeRay = ViewRay(Layers.structure);
-        ShowPreview(buildRay, structure);
 
         buildPosition = GetInstantiatePoint(buildRay, structure);
         buildRotation = Quaternion.Euler(0, rotationDelta, 0);
+
+        StructurePreview.ShowPreview(buildRay, structure, buildPosition, buildRotation, BuildConditions.ValidPosition(GetInstantiatePoint(buildRay, structure), structure, buildRotation), BuildConditions.ValidAngle(buildRay, maxBuildAngle), validMaterial, invalidMaterial);
     }
 
-    void OnLeftClick()
-    {
-        if (MovmentStates.States == MovementState.off) return;
+    void OnLeftClick(){
         if (buildRay.point == Vector3.zero) return;
-        if (!ValidPosition(GetInstantiatePoint(buildRay, structure), structure) || !ValidRotation(buildRay)) return;
+        if (!BuildConditions.ValidPosition(GetInstantiatePoint(buildRay, structure), structure, buildRotation) || !BuildConditions.ValidAngle(buildRay, maxBuildAngle)) return;
 
         BuildStructure(buildRay, structure);
     }
 
-    void OnRightClick()
-    {
-        if (MovmentStates.States == MovementState.off) return;
+    void OnRightClick(){
+        removeRay = ViewRay(Layers.structure);
+
         if (removeRay.point == Vector3.zero) return;
         RemoveStructure(removeRay);
     }
   
-    void OnScrollDelta()
-    {
+    void OnScrollDelta(){
         rotationDelta += rotationMultiplier * Input.mouseScrollDelta.y;
     }
 
-    public static RaycastHit ViewRay(LayerMask _layer)
-    {
-        Physics.Raycast(GameManager.playerCamera.transform.position, GameManager.playerCamera.transform.forward, out RaycastHit ray, 10f, _layer);
+    public static RaycastHit ViewRay(LayerMask _layer){
+        Physics.Raycast(GameManager.playerCamera.transform.position, GameManager.playerCamera.transform.forward, out RaycastHit ray, build.maxBuildDistance, _layer);
         return ray;
     }
 
-    GameObject preview = null;
-    public Material validMaterial, invalidMaterial;
-    void ShowPreview(RaycastHit _ray, StructureObject _structure)
-    {
-        if (preview == null)
-        {
-            preview = Instantiate(_structure.gameObject, buildPosition, buildRotation);
-            preview.layer = 1 << 0;
-
-            preview.GetComponent<Collider>().enabled = false;
-        }
-
-        if (preview.activeSelf)
-        {
-            if (ValidPosition(buildPosition, _structure) && ValidRotation(_ray))
-            {
-                preview.GetComponent<Renderer>().material = validMaterial;
-            }
-            else
-            {
-                preview.GetComponent<Renderer>().material = invalidMaterial;
-            }
-        }
-
-        if (_ray.point == Vector3.zero)
-        {
-            preview.SetActive(false);
-        }
-        else
-        {
-            preview.SetActive(true);
-
-            preview.transform.position = buildPosition;
-            preview.transform.rotation = buildRotation;
-        }
-    }
-
-    bool ValidPosition(Vector3 _instantiationPoint, StructureObject _structure)
-    {
-        return !Physics.CheckBox(_instantiationPoint, _structure.Dimensions / 2, buildRotation, Layers.structure);
-    }
-
-    bool ValidRotation(RaycastHit _ray)
-    {
-        return Vector3.Dot(transform.up, _ray.normal) > 0.95f;
-    }
-
-    Vector3 GetInstantiatePoint(RaycastHit _ray, StructureObject _structure)
-    {
+    Vector3 GetInstantiatePoint(RaycastHit _ray, StructureObject _structure){
         return _ray.point + (Vector3.up * _structure.Dimensions.y / 2);
     }
 
-    void BuildStructure(RaycastHit _ray , StructureObject _structure)
-    {
+    void BuildStructure(RaycastHit _ray , StructureObject _structure){
         Vector3 instantiationPoint = GetInstantiatePoint(_ray, _structure);
         Instantiate(_structure.gameObject, instantiationPoint, buildRotation);
 
-        GridInfo.GetChunk(buildPosition).structures.Add(_structure);
+        if (GridInfo.GetChunk(buildPosition) != null) GridInfo.GetChunk(buildPosition).structures.Add(_structure);
     }
 
-    void RemoveStructure(RaycastHit _ray)
-    {
+    void RemoveStructure(RaycastHit _ray){
         Destroy(_ray.transform.gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(removeRay.point, 0.2f);
     }
 }
