@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e7ecf0b97367d499d223aebbffd863, type: 3}
   m_Name: PlantBox
   m_EditorClassIdentifier: 
-  id: 1
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0}
   Dimensions: {x: 1, y: 2, z: 1}
