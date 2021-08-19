@@ -10,6 +10,7 @@ public class InventoryManger : MonoBehaviour
     public GameObject Inventory;
     public GameObject InventorySlotPanel;
     public GameObject ItemUIPrefab;
+    public GameObject HotBar;
     public int xDim, yDim;
 
     private List<slot> Slots = new List<slot>();
@@ -30,6 +31,13 @@ public class InventoryManger : MonoBehaviour
                 Slots.Add(t);
                 i++;
             } 
+        }
+        for(int h = 0; h < HotBar.transform.childCount; h++)
+        {
+            slot t = new slot();
+            t.slotGameObject = HotBar.transform.GetChild(h).gameObject;
+            t.slotNum = i;
+            Slots.Add(t);
         }
         Destroy(InventorySlotPanel.transform.GetChild(0).gameObject);
     }
@@ -54,6 +62,7 @@ public class InventoryManger : MonoBehaviour
     }
     public void setslot(int slotnum, slot item)
     {
+        if (item.ImgObject == null) Debug.Log("NULL");
         Slots[slotnum].item = item.item;
         Slots[slotnum].isTaken = true;
         Slots[slotnum].ImgObject = item.ImgObject;
@@ -155,12 +164,11 @@ public class InventoryManger : MonoBehaviour
     {
         Debug.Log("spawned Item");
         RaycastHit ray =  Build.ViewRay(Layers.ground);
-        GameObject g =  Instantiate(BasicItem, new Vector3(ray.point.x , 1 , ray.point.z) ,Quaternion.identity);
+        GameObject g =  Instantiate(BasicItem, new Vector3(ray.point.x , 5 , ray.point.z) ,Quaternion.identity);
         g.AddComponent(typeof(ItemGame));
         g.GetComponent<ItemGame>().Item = testItem;
     }
 }
-
 public class slot
 {
     public Item item;

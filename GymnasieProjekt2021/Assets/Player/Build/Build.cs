@@ -39,6 +39,7 @@ public class Build : MonoBehaviour{
     }
 
     void OnLeftClick(){
+        if (MovmentStates.States == MovementState.off) return;
         if (buildRay.point == Vector3.zero) return;
         if (!BuildConditions.ValidPosition(GetInstantiatePoint(buildRay, structure), structure, buildRotation) || !BuildConditions.ValidAngle(buildRay, maxBuildAngle)) return;
 

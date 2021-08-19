@@ -9,7 +9,7 @@ public class DragInventory : MonoBehaviour , IPointerDownHandler , IBeginDragHan
     public Canvas canvas;
     private RectTransform rectTransform;
     public InventoryManger invtory;
-    private int startPos;
+    private int startPos = 0;
     private int endPos;
     private void Awake()
     {
@@ -17,7 +17,7 @@ public class DragInventory : MonoBehaviour , IPointerDownHandler , IBeginDragHan
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        startPos = invtory.findNerestSlot(eventData.position);
+    
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -29,6 +29,7 @@ public class DragInventory : MonoBehaviour , IPointerDownHandler , IBeginDragHan
     {
         endPos = invtory.findNerestSlot(eventData.position);
         invtory.changeSlot(startPos, endPos);
+        startPos = endPos;
     }
 
     public void OnPointerDown(PointerEventData eventData)
