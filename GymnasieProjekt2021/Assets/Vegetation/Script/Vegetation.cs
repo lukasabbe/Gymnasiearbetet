@@ -31,17 +31,47 @@ public class Vegetation : MonoBehaviour{
     GameObject active_vegetation_tree_holder;
     public GameObject vegetation_tree;
 
+    [Space]
+
+    public bool previewChunksBool;
+    GridInfo.Chunk[] previewChunks;
+
+    private void OnValidate() { 
+
+        previewChunks = GetGrownChunks(cutoff);
+    }
+
     public void GenerateVegetation(float _cutoff){
 
         active_vegetation_tree_holder = Instantiate(vegetation_tree_holder, new Vector3(0, 0, 0), Quaternion.identity);
 
-        for(int x = 0; x < GridInfo.regionLength; x++){
+        for(int i = 0; i < previewChunks.Length; i++){
+            Instantiate(vegetation_tree, previewChunks[i].position + new Vector3(Random.Range(-rndOffset, rndOffset), -13f, Random.Range(-rndOffset, rndOffset)), Quaternion.identity * Quaternion.Euler(Random.Range(-rndRotation, rndRotation), Random.Range(-180f, 180f), Random.Range(-rndRotation, rndRotation)), active_vegetation_tree_holder.transform);
+        }
+    }
+
+    public GridInfo.Chunk[] GetGrownChunks(float _cutoff){
+        List<GridInfo.Chunk> chunks = new List<GridInfo.Chunk>();
+
+        for (int x = 0; x < GridInfo.regionLength; x++){
             for (int y = 0; y < GridInfo.regionLength; y++){
-
-                if(Mathf.PerlinNoise(x / noiseZoom + noiseXOffset, y / noiseZoom + noiseZOffset) > _cutoff && Random.Range(0f, 100f) < spawnChance){
-
-                    Instantiate(vegetation_tree, GridInfo.chunks[x, y].position + new Vector3(Random.Range(-rndOffset, rndOffset), -12.8f, Random.Range(-rndOffset, rndOffset)), Quaternion.identity * Quaternion.Euler(Random.Range(-rndRotation, rndRotation), Random.Range(-180f, 180f), Random.Range(-rndRotation, rndRotation)), active_vegetation_tree_holder.transform);
+                if (Mathf.PerlinNoise(x / noiseZoom + noiseXOffset, y / noiseZoom + noiseZOffset) > _cutoff && Random.Range(0f, 100f) < spawnChance){
+                    chunks.Add(GridInfo.chunks[x, y]);
                 }
+            }
+        }
+
+        return chunks.ToArray();
+    }
+
+    private void OnDrawGizmos(){
+
+        Gizmos.color = Color.green;
+
+        if (previewChunks.Length > 0 && previewChunksBool){
+            for(int i = 0; i < previewChunks.Length; i++){
+
+                Gizmos.DrawWireCube(previewChunks[i].position, GridInfo.chunkDimensions);
             }
         }
     }
@@ -59,4 +89,6 @@ public class VegetationEditor : Editor{
         }
     }
 }
+
+
 

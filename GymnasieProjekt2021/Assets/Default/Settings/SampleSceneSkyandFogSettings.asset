@@ -36,14 +36,14 @@ MonoBehaviour:
     min: 0
     max: 360
   skyIntensityMode:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 2
   exposure:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.95
   multiplier:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 6.5
     min: 0
   upperHemisphereLuxValue:
     m_OverrideState: 0
@@ -70,9 +70,9 @@ MonoBehaviour:
     m_Value: 1
   sphericalMode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   seaLevel:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   planetaryRadius:
     m_OverrideState: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
     min: 0
   aerosolDensity:
     m_OverrideState: 1
-    m_Value: 0.15
+    m_Value: 0
     min: 0
     max: 1
   aerosolTint:
@@ -127,8 +127,8 @@ MonoBehaviour:
     min: -1
     max: 1
   numberOfBounces:
-    m_OverrideState: 0
-    m_Value: 8
+    m_OverrideState: 1
+    m_Value: 1
     min: 1
     max: 10
   groundTint:
@@ -162,12 +162,12 @@ MonoBehaviour:
     m_Value: {x: 0, y: 0, z: 0}
   colorSaturation:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 1
     min: 0
     max: 1
   alphaSaturation:
     m_OverrideState: 1
-    m_Value: 0.6
+    m_Value: 1
     min: 0
     max: 1
   alphaMultiplier:
@@ -177,19 +177,19 @@ MonoBehaviour:
     max: 1
   horizonTint:
     m_OverrideState: 1
-    m_Value: {r: 0.5660378, g: 0.69041026, b: 0.754717, a: 1}
+    m_Value: {r: 0.26330546, g: 0.5085946, b: 0.5754717, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 0
   zenithTint:
     m_OverrideState: 1
-    m_Value: {r: 0.3025098, g: 0.55063474, b: 0.6226415, a: 1}
+    m_Value: {r: 0.13725491, g: 0.22237447, b: 0.27450982, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 0
   horizonZenithShift:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 1
     min: -1
     max: 1
 --- !u!114 &3912485203739470195
@@ -242,8 +242,8 @@ MonoBehaviour:
     showAlpha: 0
     showEyeDropper: 1
   tint:
-    m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 0
+    m_Value: {r: 0.065815255, g: 0.20301375, b: 0.4811321, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
@@ -269,9 +269,9 @@ MonoBehaviour:
     m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 150
+    m_Value: 250
   albedo:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
     hdr: 0
     showAlpha: 1
