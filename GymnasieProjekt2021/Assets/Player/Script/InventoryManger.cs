@@ -6,19 +6,24 @@ using UnityEngine.UI;
 public class InventoryManger : MonoBehaviour
 {
     public ScriptableObject testItem;
+    [Header("Public GameObjects")]
     public GameObject BasicItem;
     public GameObject Inventory;
     public GameObject InventorySlotPanel;
     public GameObject ItemUIPrefab;
     public GameObject HotBar;
+    [Header("Setings of hotbar")]
+    public int hotBarIndex;
     public int xDim, yDim;
-
+    //private vars
     private List<slot> Slots = new List<slot>();
+    private int firstHotBarIndex = 0;
     public void Start()
     {
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
         input.inventoryKey += OpenInventory;
         input.debugSpawnItemKey += spawnTestItem;
+        input.onHotBarDelta += onHotBarClick;
         int i = 0;
         for(int y = 0; y < yDim; y++)
         {
@@ -34,14 +39,28 @@ public class InventoryManger : MonoBehaviour
         }
         for(int h = 0; h < HotBar.transform.childCount; h++)
         {
+            if (firstHotBarIndex == 0) firstHotBarIndex = i;
             slot t = new slot();
             t.slotGameObject = HotBar.transform.GetChild(h).gameObject;
             t.slotNum = i;
             Slots.Add(t);
-        }
+        }   
+        setHotbarIndex(firstHotBarIndex);
         Destroy(InventorySlotPanel.transform.GetChild(0).gameObject);
     }
-
+    public void onHotBarClick(int index)
+    {
+        index = firstHotBarIndex + index -1;
+        setHotbarIndex(index);
+    }
+    public void setHotbarIndex(int index)
+    {
+        if (index < firstHotBarIndex) return;
+        Slots[hotBarIndex].slotGameObject.GetComponent<Image>().color = Color.white;
+        hotBarIndex = index;
+        Slots[hotBarIndex].slotGameObject.GetComponent<Image>().color = Color.gray;
+        
+    }
     public void changeSlot(int fromSlotNum , int toSlotNum)
     {
         if(fromSlotNum == toSlotNum || Slots[toSlotNum].isTaken)
