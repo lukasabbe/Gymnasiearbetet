@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Vegetation : MonoBehaviour{
 
+    public bool DebugVegetationChunks;
+
     [Range(0, 1)]
     public float cutoff;
 
@@ -33,7 +35,6 @@ public class Vegetation : MonoBehaviour{
 
     [Space]
 
-    public bool previewChunksBool;
     GridInfo.Chunk[] previewChunks;
 
     private void OnValidate() { 
@@ -68,7 +69,7 @@ public class Vegetation : MonoBehaviour{
 
         Gizmos.color = Color.green;
 
-        if (previewChunks.Length > 0 && previewChunksBool){
+        if (previewChunks.Length > 0 && DebugVegetationChunks){
             for(int i = 0; i < previewChunks.Length; i++){
 
                 Gizmos.DrawWireCube(previewChunks[i].position, GridInfo.chunkDimensions);

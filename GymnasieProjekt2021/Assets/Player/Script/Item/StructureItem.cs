@@ -5,5 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="StructereItem", menuName = "ScriptableObjects/items/new StructereItem")]
 public class StructureItem : Item
 {
-    public ItemType type = ItemType.structere; 
+    public StructureObject structure;
+
+    private void OnEnable() {
+        itemType = ItemType.Structure;
+    }
 }

@@ -9,10 +9,13 @@ public class Item : ScriptableObject
     public string ItemName;
     public string description;
     public Sprite Sprite;
+
+    public ItemType itemType;
 }
 
+[System.Serializable]
 public enum ItemType {
     Food,
-    structere,
+    Structure,
     Material
 }

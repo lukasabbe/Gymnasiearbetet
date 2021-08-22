@@ -19,8 +19,13 @@ public class Build : MonoBehaviour{
 
     public Material validMaterial, invalidMaterial;
 
+    InventoryManager inventoryManager;
+
+    [HideInInspector] public bool isEnabled;
+
     private void Start(){
         build = this;
+        inventoryManager = FindObjectOfType<InventoryManager>();
 
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
 
@@ -28,17 +33,20 @@ public class Build : MonoBehaviour{
         input.rightMouseButton += OnRightClick;
         input.scroll += OnScrollDelta;
     }
-
     private void Update(){
+        if (isEnabled){
         buildRay = ViewRay(Layers.ground);
 
         buildPosition = GetInstantiatePoint(buildRay, structure);
-        buildRotation = Quaternion.Euler(0, rotationDelta, 0);
+        buildRotation = Quaternion.Euler(0, rotationDelta, 0); 
 
         StructurePreview.ShowPreview(buildRay, structure, buildPosition, buildRotation, BuildConditions.ValidPosition(GetInstantiatePoint(buildRay, structure), structure, buildRotation), BuildConditions.ValidAngle(buildRay, maxBuildAngle), validMaterial, invalidMaterial);
+        }
     }
 
     void OnLeftClick(){
+        if (!isEnabled) return;
+
         if (buildRay.point == Vector3.zero) return;
         if (!BuildConditions.ValidPosition(GetInstantiatePoint(buildRay, structure), structure, buildRotation) || !BuildConditions.ValidAngle(buildRay, maxBuildAngle)) return;
 
@@ -46,6 +54,8 @@ public class Build : MonoBehaviour{
     }
 
     void OnRightClick(){
+        if (!isEnabled) return;
+
         removeRay = ViewRay(Layers.structure);
 
         if (removeRay.point == Vector3.zero) return;
@@ -53,6 +63,8 @@ public class Build : MonoBehaviour{
     }
   
     void OnScrollDelta(){
+        if (!isEnabled) return;
+
         rotationDelta += rotationMultiplier * Input.mouseScrollDelta.y;
     }
 

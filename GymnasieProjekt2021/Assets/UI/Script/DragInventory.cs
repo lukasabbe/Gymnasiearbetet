@@ -8,7 +8,7 @@ public class DragInventory : MonoBehaviour , IPointerDownHandler , IBeginDragHan
 {
     public Canvas canvas;
     private RectTransform rectTransform;
-    public InventoryManger invtory;
+    public InventoryManager invtory;
     private int startPos = 0;
     private int endPos;
     private void Awake()

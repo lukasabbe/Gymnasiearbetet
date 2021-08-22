@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryManger : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
     public ScriptableObject testItem;
     [Header("Public GameObjects")]
@@ -16,8 +16,11 @@ public class InventoryManger : MonoBehaviour
     public int hotBarIndex;
     public int xDim, yDim;
     //private vars
-    private List<slot> Slots = new List<slot>();
-    private int firstHotBarIndex = 0;
+    public List<slot> Slots = new List<slot>();
+    [HideInInspector]
+    public int firstHotBarIndex = 0;
+
+    HotbarHandler hotbarHandler;
     public void Start()
     {
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
@@ -45,8 +48,10 @@ public class InventoryManger : MonoBehaviour
             t.slotNum = i;
             Slots.Add(t);
         }   
+        hotbarHandler = GetComponent<HotbarHandler>();
+
         setHotbarIndex(firstHotBarIndex);
-        Destroy(InventorySlotPanel.transform.GetChild(0).gameObject);
+        Destroy(InventorySlotPanel.transform.GetChild(0).gameObject); 
     }
     public void onHotBarClick(int index)
     {
@@ -60,6 +65,7 @@ public class InventoryManger : MonoBehaviour
         hotBarIndex = index;
         Slots[hotBarIndex].slotGameObject.GetComponent<Image>().color = Color.gray;
         
+        hotbarHandler.OnHotbarDelta();
     }
     public void changeSlot(int fromSlotNum , int toSlotNum)
     {
@@ -182,15 +188,14 @@ public class InventoryManger : MonoBehaviour
     void spawnTestItem()
     {
         Debug.Log("spawned Item");
-        RaycastHit ray =  Build.ViewRay(Layers.ground);
-        GameObject g =  Instantiate(BasicItem, new Vector3(ray.point.x , 5 , ray.point.z) ,Quaternion.identity);
+        GameObject g =  Instantiate(BasicItem, new Vector3(0, 5, 0) ,Quaternion.identity);
         g.AddComponent(typeof(ItemGame));
         g.GetComponent<ItemGame>().Item = testItem;
     }
 }
 public class slot
 {
-    public Item item;
+    public Item item = null;
     public GameObject slotGameObject;
     public GameObject ImgObject;
     public bool isTaken;

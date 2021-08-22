@@ -5,7 +5,6 @@ public static class StructurePreview{
     static GameObject preview = null;
 
     public static void ShowPreview(RaycastHit _ray, StructureObject _structure, Vector3 _buildPosition, Quaternion _buildRotation, bool _validPosition, bool _validRotation, Material _validMaterial, Material _invalidMaterial){
-
         if (preview == null){
             preview = GameObject.Instantiate(_structure.gameObject, _buildPosition, _buildRotation);
             preview.layer = 1 << 0;
@@ -25,5 +24,10 @@ public static class StructurePreview{
 
         if (isActive && !preview.activeSelf) preview.SetActive(true);
         else if (!isActive && preview.activeSelf) preview.SetActive(false);
+    }
+
+    public static void UpdatePreview(bool isEnabled){
+        if (isEnabled) return;
+        GameObject.Destroy(preview);
     }
 }
