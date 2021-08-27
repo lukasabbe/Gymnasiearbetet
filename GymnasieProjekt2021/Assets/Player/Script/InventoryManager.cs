@@ -37,6 +37,7 @@ public class InventoryManager : MonoBehaviour
                 slot t = new slot();
                 t.slotGameObject = g;
                 t.slotNum = i;
+                t.isTaken = false;
                 Slots.Add(t);
                 i++;
             } 
@@ -47,6 +48,7 @@ public class InventoryManager : MonoBehaviour
             slot t = new slot();
             t.slotGameObject = HotBar.transform.GetChild(h).gameObject;
             t.slotNum = i;
+            t.isTaken = false;
             Slots.Add(t);
         }   
         hotbarHandler = GetComponent<HotbarHandler>();
@@ -206,7 +208,7 @@ public class InventoryManager : MonoBehaviour
     void spawnTestItem()
     {
         Debug.Log("spawned Item");
-        GameObject g =  Instantiate(BasicItem, new Vector3(0, 3, 0) ,Quaternion.identity);
+        GameObject g =  Instantiate(BasicItem, new Vector3(0, 4.5f, 0) ,Quaternion.identity);
         g.AddComponent(typeof(ItemGame));
         g.GetComponent<ItemGame>().Item = testItem;
     }
