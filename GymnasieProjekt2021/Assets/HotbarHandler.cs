@@ -17,7 +17,10 @@ public class HotbarHandler : MonoBehaviour
         try{       
             switch(inventoryManager.Slots[inventoryManager.hotBarIndex].item.itemType){
                 case ItemType.Structure:
-                buildScript.isEnabled = true;
+                    buildScript.isEnabled = true;
+                    Item item = inventoryManager.Slots[inventoryManager.hotBarIndex].item;
+                    StructureItem structItem = item as StructureItem;
+                    buildScript.structure = structItem.structure;
                 break;
                 case ItemType.Food:
                 Debug.Log("Nom Nom");

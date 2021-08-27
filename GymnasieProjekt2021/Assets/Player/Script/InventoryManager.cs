@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject InventorySlotPanel;
     public GameObject ItemUIPrefab;
     public GameObject HotBar;
+    public GameObject ItemInfo;
     [Header("Setings of hotbar")]
     public int hotBarIndex;
     public int xDim, yDim;
@@ -53,6 +54,21 @@ public class InventoryManager : MonoBehaviour
         setHotbarIndex(firstHotBarIndex);
         Destroy(InventorySlotPanel.transform.GetChild(0).gameObject); 
     }
+    public void setItemInfo(int indexOfDisplaySlot, bool activate)
+    {
+        if (Slots[indexOfDisplaySlot].isTaken != true) return;
+        if (activate)
+        {
+            ItemInfo.transform.position = Slots[indexOfDisplaySlot].ImgObject.transform.position;
+            ItemInfo.transform.GetChild(0).GetComponent<Text>().text = Slots[indexOfDisplaySlot].item.ItemName;
+            ItemInfo.transform.GetChild(1).GetComponent<Text>().text = Slots[indexOfDisplaySlot].item.itemType.ToString();
+            ItemInfo.SetActive(activate);
+        }
+        else
+        {
+            ItemInfo.SetActive(activate);
+        }
+    }
     public void onHotBarClick(int index)
     {
         index = firstHotBarIndex + index -1;
@@ -67,16 +83,18 @@ public class InventoryManager : MonoBehaviour
         
         hotbarHandler.OnHotbarDelta();
     }
-    public void changeSlot(int fromSlotNum , int toSlotNum)
+    public bool changeSlot(int fromSlotNum , int toSlotNum)
     {
         if(fromSlotNum == toSlotNum || Slots[toSlotNum].isTaken)
         {
             Slots[fromSlotNum].ImgObject.transform.position = Slots[fromSlotNum].slotGameObject.transform.position;
+            return false;
         }
         else
         {
             setslot(toSlotNum, Slots[fromSlotNum]);
             clearSlot(fromSlotNum);
+            return true;
         }
     }
     public void clearSlot(int slotnum)
@@ -188,7 +206,7 @@ public class InventoryManager : MonoBehaviour
     void spawnTestItem()
     {
         Debug.Log("spawned Item");
-        GameObject g =  Instantiate(BasicItem, new Vector3(0, 5, 0) ,Quaternion.identity);
+        GameObject g =  Instantiate(BasicItem, new Vector3(0, 3, 0) ,Quaternion.identity);
         g.AddComponent(typeof(ItemGame));
         g.GetComponent<ItemGame>().Item = testItem;
     }

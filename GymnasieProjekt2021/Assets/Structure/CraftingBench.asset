@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbcad64163c23d841b76bbade61011b5, type: 3}
-  m_Name: MaterialItem
+  m_Script: {fileID: 11500000, guid: 41e7ecf0b97367d499d223aebbffd863, type: 3}
+  m_Name: CraftingBench
   m_EditorClassIdentifier: 
-  id: 2
-  ItemName: test
-  description: 
-  Sprite: {fileID: 0}
-  itemType: 2
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  Dimensions: {x: 1, y: 1, z: 1}
+  gameObject: {fileID: 983394746164256585, guid: 8c5dcbc9bedff954992a248407a65c6d, type: 3}

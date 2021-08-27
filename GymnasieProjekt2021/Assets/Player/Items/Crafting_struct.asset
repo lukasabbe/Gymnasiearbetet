@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbcad64163c23d841b76bbade61011b5, type: 3}
-  m_Name: MaterialItem
+  m_Script: {fileID: 11500000, guid: e67956b1cc8a0fa4e8652b61a309ce18, type: 3}
+  m_Name: Crafting_struct
   m_EditorClassIdentifier: 
-  id: 2
-  ItemName: test
+  id: 1
+  ItemName: Crafting bench
   description: 
-  Sprite: {fileID: 0}
-  itemType: 2
+  Sprite: {fileID: 21300000, guid: 77c252f8b3cbecc48852fbf050fbf5f9, type: 3}
+  itemType: 1
+  structure: {fileID: 11400000, guid: 44a2576748f677e4bb41b18796ffea9e, type: 2}
