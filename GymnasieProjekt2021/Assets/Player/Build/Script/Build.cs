@@ -35,7 +35,7 @@ public class Build : MonoBehaviour{
     }
     private void Update(){
         if (isEnabled){
-        buildRay = ViewRay(Layers.ground);
+        buildRay = PlayerHelperFunctions.ViewRay(buildRay, maxBuildDistance, Layers.ground);
 
         buildPosition = GetInstantiatePoint(buildRay, structure);
         buildRotation = Quaternion.Euler(0, rotationDelta, 0); 
@@ -56,7 +56,7 @@ public class Build : MonoBehaviour{
     void OnRightClick(){
         if (!isEnabled) return;
 
-        removeRay = ViewRay(Layers.structure);
+        removeRay = PlayerHelperFunctions.ViewRay(removeRay, maxBuildDistance, Layers.structure);
 
         if (removeRay.point == Vector3.zero) return;
         RemoveStructure(removeRay);
@@ -66,11 +66,6 @@ public class Build : MonoBehaviour{
         if (!isEnabled) return;
 
         rotationDelta += rotationMultiplier * Input.mouseScrollDelta.y;
-    }
-
-    public static RaycastHit ViewRay(LayerMask _layer){
-        Physics.Raycast(GameManager.playerCamera.transform.position, GameManager.playerCamera.transform.forward, out RaycastHit ray, build.maxBuildDistance, _layer);
-        return ray;
     }
 
     Vector3 GetInstantiatePoint(RaycastHit _ray, StructureObject _structure){
