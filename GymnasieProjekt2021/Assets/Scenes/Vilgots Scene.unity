@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 448.88608, g: 320.6521, b: 396.49002, a: 1}
+  m_IndirectSpecularColor: {r: 445.50494, g: 314.14987, b: 385.92508, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -943,7 +943,7 @@ Transform:
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &799250664
 MeshCollider:
@@ -1176,6 +1176,7 @@ MonoBehaviour:
   InventorySlotPanel: {fileID: 1534756653}
   ItemUIPrefab: {fileID: 8927066917329413809, guid: 36c4cf5e7723b2143ab63f26bc799670, type: 3}
   HotBar: {fileID: 106622637}
+  ItemInfo: {fileID: 0}
   hotBarIndex: 0
   xDim: 6
   yDim: 3
@@ -1261,7 +1262,7 @@ Transform:
   - {fileID: 334979489}
   - {fileID: 2137857556}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &861643739
 MonoBehaviour:
@@ -1443,7 +1444,7 @@ RectTransform:
   - {fileID: 65725590}
   - {fileID: 106622638}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

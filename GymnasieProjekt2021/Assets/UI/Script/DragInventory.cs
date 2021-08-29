@@ -9,14 +9,26 @@ public class DragInventory : MonoBehaviour , IPointerDownHandler , IBeginDragHan
     public Canvas canvas;
     private RectTransform rectTransform;
     public InventoryManager invtory;
-    private int startPos = 0;
+    public int startPos = 0;
     private int endPos;
     private bool isItemInfoOn = false;
     public bool dragOn = false;
+    public bool startInStructureInventory = false;
+    
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        startPos = invtory.findEmptySlot() -1;
+        /*
+        if (startInStructureInventory)
+        {
+            startPos = invtory.findEmptySlot(startInStructureInventory) + invtory.Slots.Count - 1;
+        }
+        else
+        {
+            startPos = invtory.findEmptySlot(startInStructureInventory) -1;
+            Debug.Log("startpos" + startPos);
+        }
+        */
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

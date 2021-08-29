@@ -8,6 +8,5 @@ public class MaterialItem : Item
     private void OnEnable()
     {
         itemType = ItemType.Material;
-        id = (int)ItemType.Material;
     }
 }

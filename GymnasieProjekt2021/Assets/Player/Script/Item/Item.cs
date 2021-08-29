@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Item : ScriptableObject
 {
-    public int id;
+    public string id;
     public string ItemName;
     public string description;
     public Sprite Sprite;

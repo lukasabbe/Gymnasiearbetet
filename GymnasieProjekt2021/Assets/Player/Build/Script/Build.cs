@@ -21,7 +21,6 @@ public class Build : MonoBehaviour{
     public Material validMaterial, invalidMaterial;
 
     InventoryManager inventoryManager;
-
     private void Start(){
         build = this;
         inventoryManager = FindObjectOfType<InventoryManager>();

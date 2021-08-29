@@ -6,27 +6,21 @@ using UnityEditor;
 
 public class StructureBasePlateUI : MonoBehaviour
 {
+    
     public bool hasInventory;
     [HideInInspector]
     public int xSizeOfInventory , ySizeOfInventory;
 
     //private
+    [HideInInspector]
+    public InventoryManager PlayerInventory;
     private GameObject StructurePannel;
     [HideInInspector]
     public List<slot> Slots = new List<slot>();
     PlayerInputEventManager input;
-    private void OnEnable()
-    {
-        PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
-        input.openStructKey += openInventory;
-    }
-    private void OnDisable()
-    {
-        PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
-        input.openStructKey -= openInventory;
-    }
     private void Start()
     {
+        PlayerInventory = FindObjectOfType<InventoryManager>();
         StructurePannel = transform.GetChild(0).GetChild(0).gameObject;
         if (hasInventory)
         {
@@ -47,19 +41,22 @@ public class StructureBasePlateUI : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
         Destroy(StructurePannel.transform.GetChild(0).gameObject);
     }
-    void openInventory()
+    public void openInventory(RaycastHit ray)
     {
-        Physics.Raycast(GameManager.playerCamera.transform.position, GameManager.playerCamera.transform.forward, out RaycastHit ray, 10f, Layers.structure);
-        Debug.Log(ray.transform.gameObject.name);
-        ray.transform.GetChild(0).gameObject.SetActive(!ray.transform.GetChild(0).gameObject.activeSelf);
-    }
-    public int findEmptySlot()
-    {
-        for (int i = 0; i < Slots.Count; i++)
+        if(ray.transform.GetChild(0).gameObject.activeSelf == false)
         {
-            if (!Slots[i].isTaken) return i;
+            ray.transform.GetChild(0).gameObject.SetActive(true);
+            MovmentStates.States = MovementState.off;
+            Cursor.lockState = CursorLockMode.None;
+            if (hasInventory) PlayerInventory.LatestOpenInventoryStructure = Slots;
         }
-        return -1;
+        else
+        {
+            ray.transform.GetChild(0).gameObject.SetActive(false);
+            MovmentStates.States = MovementState.walking;
+            Cursor.lockState = CursorLockMode.Locked;
+            if (hasInventory) PlayerInventory.LatestOpenInventoryStructure = null;
+        }
     }
 }
 [CustomEditor(typeof(StructureBasePlateUI))]

@@ -20,35 +20,35 @@ public class PlayerInputEventManager : MonoBehaviour {
         if (Input.anyKey)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0)) {
-                leftMouseButton();
+                leftMouseButton?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.Mouse1)){
-                rightMouseButton();
+                rightMouseButton?.Invoke();
             }
 
             if (Input.mouseScrollDelta != Vector2.zero)
             {
-                scroll();
+                scroll?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.O)) {
-                debugKey();
+                debugKey?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                inventoryKey();
+                inventoryKey?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.P))
             {
-                debugSpawnItemKey();
+                debugSpawnItemKey?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                jumpKey();
+                jumpKey?.Invoke();
             }
 
             if(Input.GetKeyDown(KeyCode.E))
