@@ -21,15 +21,26 @@ public class Build : MonoBehaviour{
     public Material validMaterial, invalidMaterial;
 
     InventoryManager inventoryManager;
-    private void Start(){
-        build = this;
-        inventoryManager = FindObjectOfType<InventoryManager>();
 
+    void OnEnable() 
+    {
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
 
         input.leftMouseButton += OnLeftClick;
         input.rightMouseButton += OnRightClick;
         input.scroll += OnScrollDelta;
+    }
+    void OnDisable()
+    {
+        PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
+
+        input.leftMouseButton -= OnLeftClick;
+        input.rightMouseButton -= OnRightClick;
+        input.scroll -= OnScrollDelta;
+    }
+    private void Start(){
+        build = this;
+        inventoryManager = FindObjectOfType<InventoryManager>();
     }
     private void Update(){
         buildRay = PlayerHelperFunctions.ViewRay(buildRay, maxBuildDistance, Layers.ground);

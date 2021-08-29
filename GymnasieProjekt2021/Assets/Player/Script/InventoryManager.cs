@@ -31,6 +31,7 @@ public class InventoryManager : MonoBehaviour
         input.inventoryKey += OpenInventory;
         input.debugSpawnItemKey += addToInveotry;
         input.onHotBarDelta += onHotBarClick;
+        input.dropKey += dropItem;
         int i = 0;
         for(int y = 0; y < yDim; y++)
         {
@@ -59,7 +60,8 @@ public class InventoryManager : MonoBehaviour
         setHotbarIndex(firstHotBarIndex);
         Destroy(InventorySlotPanel.transform.GetChild(0).gameObject); 
     }
-    public void removeitems(Item item, int amount)
+    
+    public void removeitem(Item item, int amount)
     {
         int index = getItemIndex(item);
         Debug.Log("Index " + index);
@@ -389,12 +391,15 @@ public class InventoryManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
     }
-    void spawnTestItem()
+    void dropItem()
     {
-        Debug.Log("spawned Item");
-        GameObject g =  Instantiate(BasicItem, new Vector3(0, 3f, 0) ,Quaternion.identity);
-        g.AddComponent(typeof(ItemGame));
-        g.GetComponent<ItemGame>().Item = testItem;
+        if (!Slots[hotBarIndex].isTaken) return;
+        GameObject g =  Instantiate(BasicItem, transform.position+ new Vector3(0 , 1.5f , 0) + (transform.forward * 2) , transform.rotation);
+        g.AddComponent(typeof(Rigidbody));
+        g.transform.GetChild(0).gameObject.AddComponent(typeof(ItemGame));
+        g.transform.GetChild(0).gameObject.GetComponent<ItemGame>().Item = Slots[hotBarIndex].item;
+        g.GetComponent<Rigidbody>().AddForce(transform.forward * 3, ForceMode.Impulse);
+        removeitem(Slots[hotBarIndex].item, 1);
     }
     void addToInveotry()
     {

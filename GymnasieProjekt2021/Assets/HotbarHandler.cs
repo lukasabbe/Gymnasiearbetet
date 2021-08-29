@@ -22,10 +22,12 @@ public class HotbarHandler : MonoBehaviour
             break;
             case ItemType.Food:
                 buildScript.enabled = false;
+                StructurePreview.RemovePreivew();
                 Debug.Log("Nom Nom");
             break;
             case ItemType.Material:
                 buildScript.enabled = false;
+                StructurePreview.RemovePreivew();
                 Debug.Log("Material");
             break;
             default:

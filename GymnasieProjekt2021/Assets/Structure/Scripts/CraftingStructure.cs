@@ -21,7 +21,7 @@ public class CraftingStructure : MonoBehaviour
         GameObject Template = ContentRecipesPannel.transform.GetChild(1).gameObject;
         for (int i = 0; i < Recipes.Count; i++)
         {
-            GameObject btn_recepie = Instantiate(Template, new Vector3(Template.transform.position.x , Template.transform.position.y + (i * -30) , Template.transform.position.z), Quaternion.identity, ContentRecipesPannel.transform);
+            GameObject btn_recepie = Instantiate(Template, new Vector3(Template.transform.position.x , Template.transform.position.y + (i * -45) , Template.transform.position.z), Quaternion.identity, ContentRecipesPannel.transform);
             btn_recepie.transform.GetChild(0).GetComponent<Text>().text = Recipes[i].outPutItem.ItemName;
             btn_recepie.transform.GetChild(1).GetComponent<Image>().sprite = Recipes[i].outPutItem.Sprite;
             int temmpInt = i;
@@ -46,7 +46,7 @@ public class CraftingStructure : MonoBehaviour
         for(int i = 0; i < Recipes[selectedRecipe].neededItems.Count; i++)
         {
             GameObject neededItem = Instantiate(itemsNeeded.transform.GetChild(0).gameObject, new Vector3(itemsNeeded.transform.GetChild(0).transform.position.x, itemsNeeded.transform.GetChild(0).transform.position.y + (i * -15), itemsNeeded.transform.GetChild(0).transform.position.z), Quaternion.identity, itemsNeeded.transform);
-            neededItem.GetComponent<Text>().text = "-" + Recipes[selectedRecipe].neededItems[i].ItemName;
+            neededItem.GetComponent<Text>().text = "-" + Recipes[selectedRecipe].neededItems[i].ItemName +" - " + Recipes[selectedRecipe].amount[i];
             neededItem.SetActive(true);
         }
     }
@@ -78,7 +78,7 @@ public class CraftingStructure : MonoBehaviour
         playerInventory.addItemToInvetory(Recipes[selectedRecipe].outPutItem, true);
         for (int i = 0; i < Recipes[selectedRecipe].neededItems.Count; i++)
         {
-            playerInventory.removeitems(Recipes[selectedRecipe].neededItems[i], Recipes[selectedRecipe].amount[i]);
+            playerInventory.removeitem(Recipes[selectedRecipe].neededItems[i], Recipes[selectedRecipe].amount[i]);
         }
     }
     
