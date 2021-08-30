@@ -22,6 +22,8 @@ public class Build : MonoBehaviour{
 
     InventoryManager inventoryManager;
 
+    HotbarHandler hotbarScript;
+
     void OnEnable() 
     {
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
@@ -41,6 +43,7 @@ public class Build : MonoBehaviour{
     private void Start(){
         build = this;
         inventoryManager = FindObjectOfType<InventoryManager>();
+        hotbarScript = FindObjectOfType<HotbarHandler>();
     }
     private void Update(){
         buildRay = PlayerHelperFunctions.ViewRay(buildRay, maxBuildDistance, Layers.ground);
@@ -76,7 +79,8 @@ public class Build : MonoBehaviour{
     void BuildStructure(RaycastHit _ray , StructureObject _structure){
         Vector3 instantiationPoint = GetInstantiatePoint(_ray, _structure);
         Instantiate(_structure.gameObject, instantiationPoint, buildRotation);
-
+        inventoryManager.removeitem(inventoryManager.Slots[inventoryManager.hotBarIndex].item, 1);
+        hotbarScript.OnHotbarDelta();
         if (GridInfo.GetChunk(buildPosition) != null) GridInfo.GetChunk(buildPosition).structures.Add(_structure);
     }
 

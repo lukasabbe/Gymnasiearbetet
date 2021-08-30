@@ -41,14 +41,16 @@ public class StructureBasePlateUI : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
         Destroy(StructurePannel.transform.GetChild(0).gameObject);
     }
-    public void openInventory(RaycastHit ray)
+    public bool openInventory(GameObject ray)
     {
+
         if(ray.transform.GetChild(0).gameObject.activeSelf == false)
         {
             ray.transform.GetChild(0).gameObject.SetActive(true);
             MovmentStates.States = MovementState.off;
             Cursor.lockState = CursorLockMode.None;
             if (hasInventory) PlayerInventory.LatestOpenInventoryStructure = Slots;
+            return true;
         }
         else
         {
@@ -56,6 +58,7 @@ public class StructureBasePlateUI : MonoBehaviour
             MovmentStates.States = MovementState.walking;
             Cursor.lockState = CursorLockMode.Locked;
             if (hasInventory) PlayerInventory.LatestOpenInventoryStructure = null;
+            return false;
         }
     }
 }

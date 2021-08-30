@@ -106,7 +106,7 @@ public class InventoryManager : MonoBehaviour
                 ItemInfo.transform.position = LatestOpenInventoryStructure[indexOfDisplaySlot - Slots.Count].ImgObject.transform.position;
                 ItemInfo.transform.GetChild(0).GetComponent<Text>().text = LatestOpenInventoryStructure[indexOfDisplaySlot - Slots.Count].item.ItemName;
                 ItemInfo.transform.GetChild(1).GetComponent<Text>().text = LatestOpenInventoryStructure[indexOfDisplaySlot - Slots.Count].item.itemType.ToString();
-                ItemInfo.transform.GetChild(2).GetComponent<Text>().text = LatestOpenInventoryStructure[indexOfDisplaySlot].amount.ToString();
+                ItemInfo.transform.GetChild(2).GetComponent<Text>().text = LatestOpenInventoryStructure[indexOfDisplaySlot - Slots.Count].amount.ToString();
                 ItemInfo.SetActive(activate);
             }
             else
