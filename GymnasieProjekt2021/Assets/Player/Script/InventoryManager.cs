@@ -17,6 +17,7 @@ public class InventoryManager : MonoBehaviour
     [Header("Setings of hotbar")]
     public int hotBarIndex;
     public int xDim, yDim;
+    public int ofset;
     [HideInInspector]
     public List<slot> LatestOpenInventoryStructure;
     //private vars
@@ -32,21 +33,27 @@ public class InventoryManager : MonoBehaviour
         input.debugSpawnItemKey += addToInveotry;
         input.onHotBarDelta += onHotBarClick;
         input.dropKey += dropItem;
+        StartCoroutine(StartUI());
+    }
+    IEnumerator StartUI()
+    {
+        yield return new WaitForEndOfFrame();
+        Debug.Log(InventorySlotPanel.GetComponent<RectTransform>().rect.width);
         int i = 0;
-        for(int y = 0; y < yDim; y++)
+        for (int y = 0; y < yDim; y++)
         {
-            for(int x = 0; x < xDim; x++)
+            for (int x = 0; x < xDim; x++)
             {
-                GameObject g = Instantiate(InventorySlotPanel.transform.GetChild(0).gameObject, new Vector3(InventorySlotPanel.transform.GetChild(0).position.x + (x * 70), InventorySlotPanel.transform.GetChild(0).position.y + (y * -65), InventorySlotPanel.transform.GetChild(0).position.z), Quaternion.identity, InventorySlotPanel.transform);
+                GameObject g = Instantiate(InventorySlotPanel.transform.GetChild(0).gameObject, new Vector3((((InventorySlotPanel.GetComponent<RectTransform>().rect.width/ xDim) - ofset) * x) + InventorySlotPanel.transform.GetChild(0).position.x, InventorySlotPanel.transform.GetChild(0).position.y + (y * -80), InventorySlotPanel.transform.GetChild(0).position.z), Quaternion.identity, InventorySlotPanel.transform);
                 slot t = new slot();
                 t.slotGameObject = g;
                 t.slotNum = i;
                 t.isTaken = false;
                 Slots.Add(t);
                 i++;
-            } 
+            }
         }
-        for(int h = 0; h < HotBar.transform.childCount; h++)
+        for (int h = 0; h < HotBar.transform.childCount; h++)
         {
             if (firstHotBarIndex == 0) firstHotBarIndex = i;
             slot t = new slot();
@@ -54,13 +61,12 @@ public class InventoryManager : MonoBehaviour
             t.slotNum = i;
             t.isTaken = false;
             Slots.Add(t);
-        }   
+        }
         hotbarHandler = GetComponent<HotbarHandler>();
 
         setHotbarIndex(firstHotBarIndex);
-        Destroy(InventorySlotPanel.transform.GetChild(0).gameObject); 
+        Destroy(InventorySlotPanel.transform.GetChild(0).gameObject);
     }
-    
     public void removeitem(Item item, int amount)
     {
         int index = getItemIndex(item);

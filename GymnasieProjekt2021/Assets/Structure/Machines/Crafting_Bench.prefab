@@ -305,7 +305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983394746164256585}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0897675, y: 0.6090902, z: 2.4727275}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4204353008671620567}
@@ -405,6 +405,7 @@ MonoBehaviour:
   Recipes:
   - {fileID: 11400000, guid: 5f64c3d89077e974aaa7f2edafaeb39c, type: 2}
   - {fileID: 11400000, guid: 450b823090bb1cf42bdb23c6d6347b55, type: 2}
+  - {fileID: 11400000, guid: ae19f37b10afc3c4eb5d6f12522d6d79, type: 2}
   RecipeBtns: []
   ContentRecipesPannel: {fileID: 8945752461057315077}
   CraftPannel: {fileID: 7458780517228677088}
