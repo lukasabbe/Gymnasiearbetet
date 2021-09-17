@@ -9,6 +9,14 @@ public class StuctureFinder : MonoBehaviour
     {
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
         input.openStructKey += openStructure;
+        input.pickUpItemKey += pickupItems;
+    }
+    void pickupItems()
+    {
+        if(Physics.SphereCast(GameManager.playerCamera.transform.position, 0.3f, GameManager.playerCamera.transform.forward, out RaycastHit ray , 3 , Layers.item))
+        {
+            ray.transform.GetComponent<ItemGame>().pickUpItem(GameManager.player);
+        }
     }
 
     void openStructure()

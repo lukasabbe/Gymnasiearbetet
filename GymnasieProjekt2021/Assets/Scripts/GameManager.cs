@@ -10,4 +10,5 @@ public static class Layers{
     // När du lägger till ett Layer så måste du skriva 1 << 'index'. Annars funkar det inte.
     public static int ground = 1 << 12;
     public static int structure = 1 << 16;
+    public static int item = 1 << 21;
 }

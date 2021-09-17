@@ -402,8 +402,8 @@ public class InventoryManager : MonoBehaviour
         if (!Slots[hotBarIndex].isTaken) return;
         GameObject g =  Instantiate(BasicItem, transform.position+ new Vector3(0 , 1.5f , 0) + (transform.forward * 2) , transform.rotation);
         g.AddComponent(typeof(Rigidbody));
-        g.transform.GetChild(0).gameObject.AddComponent(typeof(ItemGame));
-        g.transform.GetChild(0).gameObject.GetComponent<ItemGame>().Item = Slots[hotBarIndex].item;
+        g.transform.gameObject.AddComponent(typeof(ItemGame));
+        g.transform.gameObject.GetComponent<ItemGame>().Item = Slots[hotBarIndex].item;
         g.GetComponent<Rigidbody>().AddForce(transform.forward * 3, ForceMode.Impulse);
         removeitem(Slots[hotBarIndex].item, 1);
     }

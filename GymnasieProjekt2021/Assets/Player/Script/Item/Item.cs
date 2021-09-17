@@ -9,7 +9,7 @@ public class Item : ScriptableObject
     public string ItemName;
     public string description;
     public Sprite Sprite;
-
+    public GameObject gameobj;
     public ItemType itemType;
 }
 

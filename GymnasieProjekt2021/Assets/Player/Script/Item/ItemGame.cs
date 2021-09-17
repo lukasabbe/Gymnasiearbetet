@@ -5,6 +5,13 @@ using UnityEngine;
 public class ItemGame : MonoBehaviour
 {
     public ScriptableObject Item;
+
+    public void pickUpItem(GameObject player)
+    {
+        player.GetComponent<InventoryManager>().addItemToInvetory((Item)Item, false);
+        Destroy(gameObject);
+    }
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
@@ -13,5 +20,6 @@ public class ItemGame : MonoBehaviour
             Destroy(gameObject.transform.parent.gameObject);
         }
     }
+   */
     
 }

@@ -13,6 +13,7 @@ public class PlayerInputEventManager : MonoBehaviour {
     public event Action jumpKey;
     public event Action openStructKey;
     public event Action dropKey;
+    public event Action pickUpItemKey;
     public event Action<int> onHotBarDelta;
 
     private void Update() {
@@ -55,6 +56,11 @@ public class PlayerInputEventManager : MonoBehaviour {
             if(Input.GetKeyDown(KeyCode.E))
             {
                 openStructKey?.Invoke();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                pickUpItemKey?.Invoke();
             }
 
             if (Input.GetKeyDown(KeyCode.Q))
