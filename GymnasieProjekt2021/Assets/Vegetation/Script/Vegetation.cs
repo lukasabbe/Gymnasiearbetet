@@ -49,6 +49,7 @@ public class Vegetation : MonoBehaviour{
         for(int i = 0; i < previewChunks.Length; i++){
             Instantiate(vegetation_tree, previewChunks[i].position + new Vector3(Random.Range(-rndOffset, rndOffset), -13f, Random.Range(-rndOffset, rndOffset)), Quaternion.identity * Quaternion.Euler(Random.Range(-rndRotation, rndRotation), Random.Range(-180f, 180f), Random.Range(-rndRotation, rndRotation)), active_vegetation_tree_holder.transform);
         }
+
     }
 
     public GridInfo.Chunk[] GetGrownChunks(float _cutoff){
@@ -64,7 +65,7 @@ public class Vegetation : MonoBehaviour{
 
         return chunks.ToArray();
     }
-
+    /*
     private void OnDrawGizmos(){
 
         Gizmos.color = Color.green;
@@ -76,6 +77,7 @@ public class Vegetation : MonoBehaviour{
             }
         }
     }
+    */
 }
 
 [CustomEditor(typeof(Vegetation))]
