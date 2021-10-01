@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90e7eb53b3805924ab664fe229cd3a05, type: 3}
-  m_Name: Test
+  m_Name: Iron_Ingot
   m_EditorClassIdentifier: 
   neededItems:
-  - {fileID: 11400000, guid: 5b06007f2fd44114ea52be8206358aa9, type: 2}
-  - {fileID: 11400000, guid: 04f8ee946a366d8438524e79fcc62a22, type: 2}
-  amount: 0100000001000000
-  outPutItem: {fileID: 11400000, guid: 739ac0d7836aeb744afb02fb9d486779, type: 2}
+  - {fileID: 11400000, guid: 9bd74b3520c694343ba923029a06a04b, type: 2}
+  amount: 01000000
+  outPutItem: {fileID: 11400000, guid: f7f9b7230e91dd34f81eb57fc4d8982f, type: 2}

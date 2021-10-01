@@ -159,9 +159,26 @@ public class InventoryManager : MonoBehaviour
 
         if (check < Slots.Count -1)
         {
+            Debug.Log((fromSlotNum == toSlotNum).ToString() + " and " + Slots[toSlotNum].isTaken); //fixa 
             if(fromSlotNum == toSlotNum || Slots[toSlotNum].isTaken)
             {
-                Slots[fromSlotNum].ImgObject.transform.position = Slots[fromSlotNum].slotGameObject.transform.position;
+                if(Slots[toSlotNum].item == Slots[fromSlotNum].item)
+                {
+                    if (fromSlotNum > Slots.Count - 1)
+                    {
+                        setslot(toSlotNum, LatestOpenInventoryStructure[fromSlotNum - Slots.Count],true);
+                        removeSlot(fromSlotNum);
+                    }
+                    else
+                    {
+                        setslot(toSlotNum, Slots[fromSlotNum], true);
+                        removeSlot(fromSlotNum);
+                    }
+                }
+                else
+                {
+                    Slots[fromSlotNum].ImgObject.transform.position = Slots[fromSlotNum].slotGameObject.transform.position;
+                }
                 return false;
             }
             else
@@ -183,7 +200,23 @@ public class InventoryManager : MonoBehaviour
         {
             if (fromSlotNum == toSlotNum || LatestOpenInventoryStructure[toSlotNum - Slots.Count].isTaken)
             {
-                LatestOpenInventoryStructure[fromSlotNum - Slots.Count].ImgObject.transform.position = LatestOpenInventoryStructure[fromSlotNum - Slots.Count].slotGameObject.transform.position;
+                if(LatestOpenInventoryStructure[toSlotNum - Slots.Count].item == LatestOpenInventoryStructure[fromSlotNum - Slots.Count].item)
+                {
+                    if (fromSlotNum > Slots.Count - 1)
+                    {
+                        setslot(toSlotNum, LatestOpenInventoryStructure[fromSlotNum - Slots.Count], true);
+                        removeSlot(fromSlotNum);
+                    }
+                    else
+                    {
+                        setslot(toSlotNum, Slots[fromSlotNum] ,true);
+                        removeSlot(fromSlotNum);
+                    }
+                }
+                else
+                {
+                    LatestOpenInventoryStructure[fromSlotNum - Slots.Count].ImgObject.transform.position = LatestOpenInventoryStructure[fromSlotNum - Slots.Count].slotGameObject.transform.position;
+                }
                 return false;
             }
             else
@@ -220,66 +253,109 @@ public class InventoryManager : MonoBehaviour
             Slots[slotnum].item = null;
         }
     }
-    public void setslot(int slotnum, slot item)
+    public void removeSlot(int slotnum)
+    {
+        if (slotnum > Slots.Count - 1)
+        {
+            slotnum -= Slots.Count;
+            LatestOpenInventoryStructure[slotnum].amount = 0;
+            LatestOpenInventoryStructure[slotnum].isTaken = false;
+            LatestOpenInventoryStructure[slotnum].item = null;
+            Destroy(LatestOpenInventoryStructure[slotnum].ImgObject);
+        }
+        else
+        {
+            Slots[slotnum].amount = 0;
+            Slots[slotnum].isTaken = false;
+            Slots[slotnum].item = null;
+            Destroy(Slots[slotnum].ImgObject);
+        }
+    }
+    public void setslot(int slotnum, slot item, bool addAmount = false)
     {
         if (item.ImgObject == null) Debug.Log("NULL");
         if(slotnum > Slots.Count -1)
         {
-            slotnum -= Slots.Count;
-            LatestOpenInventoryStructure[slotnum].item = item.item;
-            LatestOpenInventoryStructure[slotnum].isTaken = true;
-            LatestOpenInventoryStructure[slotnum].ImgObject = item.ImgObject;
-            LatestOpenInventoryStructure[slotnum].ImgObject.transform.SetParent(LatestOpenInventoryStructure[slotnum].slotGameObject.transform);
-            LatestOpenInventoryStructure[slotnum].ImgObject.transform.position = LatestOpenInventoryStructure[slotnum].slotGameObject.transform.position;
-            LatestOpenInventoryStructure[slotnum].amount = item.amount;
-            LatestOpenInventoryStructure[slotnum].ImgObject.GetComponent<DragInventory>().canvas = LatestOpenInventoryStructure[slotnum].ImgObject.transform.parent.parent.parent.GetComponent<Canvas>();
+            if (addAmount)
+            {
+                LatestOpenInventoryStructure[slotnum - Slots.Count].amount++;
+            }
+            else
+            {
+                slotnum -= Slots.Count;
+                LatestOpenInventoryStructure[slotnum].item = item.item;
+                LatestOpenInventoryStructure[slotnum].isTaken = true;
+                LatestOpenInventoryStructure[slotnum].ImgObject = item.ImgObject;
+                LatestOpenInventoryStructure[slotnum].ImgObject.transform.SetParent(LatestOpenInventoryStructure[slotnum].slotGameObject.transform);
+                LatestOpenInventoryStructure[slotnum].ImgObject.transform.position = LatestOpenInventoryStructure[slotnum].slotGameObject.transform.position;
+                LatestOpenInventoryStructure[slotnum].amount = item.amount;
+                LatestOpenInventoryStructure[slotnum].ImgObject.GetComponent<DragInventory>().canvas = LatestOpenInventoryStructure[slotnum].ImgObject.transform.parent.parent.parent.GetComponent<Canvas>();
+            }   
         }
         else
         {
-            Slots[slotnum].item = item.item;
-            Slots[slotnum].isTaken = true;
-            Slots[slotnum].ImgObject = item.ImgObject;
-            Slots[slotnum].ImgObject.transform.SetParent(Slots[slotnum].slotGameObject.transform);
-            Slots[slotnum].ImgObject.transform.position = Slots[slotnum].slotGameObject.transform.position;
-            Slots[slotnum].amount = item.amount;
-            Slots[slotnum].ImgObject.GetComponent<DragInventory>().canvas = Inventory.transform.parent.GetComponent<Canvas>();
+            if (addAmount)
+            {
+                Slots[slotnum].amount++;
+            }
+            else
+            {
+                Slots[slotnum].item = item.item;
+                Slots[slotnum].isTaken = true;
+                Slots[slotnum].ImgObject = item.ImgObject;
+                Slots[slotnum].ImgObject.transform.SetParent(Slots[slotnum].slotGameObject.transform);
+                Slots[slotnum].ImgObject.transform.position = Slots[slotnum].slotGameObject.transform.position;
+                Slots[slotnum].amount = item.amount;
+                Slots[slotnum].ImgObject.GetComponent<DragInventory>().canvas = Inventory.transform.parent.GetComponent<Canvas>();
+            }
         }
     }
-    public void addItemToInvetory(Item item, bool inStructureInvetory)
+    public void addItemToInvetory(Item item, bool inStructureInvetory, bool forceStructureInventory,int index = -1, List<slot> saveStructureInventory = null)
     {
         if (inStructureInvetory)
         {
-            Debug.Log("yes2");
-            if (doItemExist(item))
+            if (doItemExist(item , forceStructureInventory))
             {
-                Debug.Log("yes3");
-                Slots[getItemIndex(item)].amount += 1;
+                if (saveStructureInventory == null) Slots[getItemIndex(item)].amount += 1;
+                else saveStructureInventory[getItemIndex(item, saveStructureInventory)].amount += 1;
             }
             else
             {
-                Debug.Log("yes4");
-                int index = findEmptySlot(true);
-                Debug.Log(index);
-                LatestOpenInventoryStructure[index].isTaken = true;
-                LatestOpenInventoryStructure[index].item = item;
-                LatestOpenInventoryStructure[index].ImgObject = Instantiate(ItemUIPrefab, LatestOpenInventoryStructure[index].slotGameObject.transform.position, Quaternion.identity, LatestOpenInventoryStructure[index].slotGameObject.transform);
-                LatestOpenInventoryStructure[index].ImgObject.GetComponent<DragInventory>().canvas = LatestOpenInventoryStructure[index].ImgObject.transform.parent.parent.parent.GetComponent<Canvas>();
-                LatestOpenInventoryStructure[index].ImgObject.GetComponent<DragInventory>().invtory = this;
-                LatestOpenInventoryStructure[index].ImgObject.GetComponent<DragInventory>().startPos = index + Slots.Count;
-                LatestOpenInventoryStructure[index].ImgObject.GetComponent<Image>().sprite = LatestOpenInventoryStructure[index].item.Sprite;
-                LatestOpenInventoryStructure[index].amount = 1;
+                if (saveStructureInventory == null)
+                {
+                    if (index == -1) index = findEmptySlot(true);
+                    LatestOpenInventoryStructure[index].isTaken = true;
+                    LatestOpenInventoryStructure[index].item = item;
+                    LatestOpenInventoryStructure[index].ImgObject = Instantiate(ItemUIPrefab, LatestOpenInventoryStructure[index].slotGameObject.transform.position, Quaternion.identity, LatestOpenInventoryStructure[index].slotGameObject.transform);
+                    LatestOpenInventoryStructure[index].ImgObject.GetComponent<DragInventory>().canvas = LatestOpenInventoryStructure[index].ImgObject.transform.parent.parent.parent.GetComponent<Canvas>();
+                    LatestOpenInventoryStructure[index].ImgObject.GetComponent<DragInventory>().invtory = this;
+                    LatestOpenInventoryStructure[index].ImgObject.GetComponent<DragInventory>().startPos = index + Slots.Count;
+                    LatestOpenInventoryStructure[index].ImgObject.GetComponent<Image>().sprite = LatestOpenInventoryStructure[index].item.Sprite;
+                    LatestOpenInventoryStructure[index].amount = 1;
+                }
+                else
+                {
+                    if (index == -1) index = findEmptySlot(true);
+                    saveStructureInventory[index].isTaken = true;
+                    saveStructureInventory[index].item = item;
+                    saveStructureInventory[index].ImgObject = Instantiate(ItemUIPrefab, saveStructureInventory[index].slotGameObject.transform.position, Quaternion.identity, saveStructureInventory[index].slotGameObject.transform);
+                    saveStructureInventory[index].ImgObject.GetComponent<DragInventory>().canvas = saveStructureInventory[index].ImgObject.transform.parent.parent.parent.GetComponent<Canvas>();
+                    saveStructureInventory[index].ImgObject.GetComponent<DragInventory>().invtory = this;
+                    saveStructureInventory[index].ImgObject.GetComponent<DragInventory>().startPos = index + Slots.Count;
+                    saveStructureInventory[index].ImgObject.GetComponent<Image>().sprite = saveStructureInventory[index].item.Sprite;
+                    saveStructureInventory[index].amount = 1;
+                }
             }
         }
         else
         {
-            if (doItemExist(item))
+            if (doItemExist(item, false))
             {
                 Slots[getItemIndex(item)].amount += 1;
-                Debug.Log(Slots[getItemIndex(item)].amount);
             }
             else
             {
-                int index = findEmptySlot(false);
+                if (index == -1) index = findEmptySlot(false);
                 Slots[index].isTaken = true;
                 Slots[index].item = item;
                 Slots[index].ImgObject = Instantiate(ItemUIPrefab, Slots[index].slotGameObject.transform.position,Quaternion.identity, Slots[index].slotGameObject.transform);
@@ -291,25 +367,48 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-    public int getItemIndex(Item item)
+    public int getItemIndex(Item item, List<slot> saveStructureInventory = null)
     {
-        for(int i = 0; i < Slots.Count; i++)
+        if(saveStructureInventory == null)
         {
-            if (Slots[i].item == item) return i;
-        }
-        return -1;
-    }
-    public bool doItemExist(Item item)
-    {
-        for(int i = 0; i < Slots.Count; i++)
-        {
-            if(Slots[i].item == item)
+            for(int i = 0; i < Slots.Count; i++)
             {
-                Debug.Log("test");
-                return true;
+                if (Slots[i].item == item) return i;
             }
         }
-        if(LatestOpenInventoryStructure != null)
+        else
+        {
+            for (int i = 0; i < saveStructureInventory.Count; i++)
+            {
+                if (saveStructureInventory[i].item == item) return i;
+            }
+        }
+        
+        return -1;
+    }
+    public bool doItemExist(Item item, bool forceStructureInventory, List<slot> saveStructureInventory = null)
+    {
+        if (!forceStructureInventory)
+        {
+            for(int i = 0; i < Slots.Count; i++)
+            {
+                if(Slots[i].item == item)
+                {
+                    return true;
+                }
+            }
+        }
+        else if (saveStructureInventory != null)
+        {
+            for (int i = 0; i < saveStructureInventory.Count; i++)
+            {
+                if (saveStructureInventory[i].item == item)
+                {
+                    return true;
+                }
+            }
+        }
+        else if(LatestOpenInventoryStructure != null)
         {
             for(int i = 0; i<LatestOpenInventoryStructure.Count; i++)
             {
@@ -321,9 +420,16 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
-    public int findEmptySlot(bool inStructureInvetory)
+    public int findEmptySlot(bool inStructureInvetory, List<slot> saveStructureInventory = null)
     {
-        if (inStructureInvetory)
+        if(saveStructureInventory != null) 
+        {
+            for (int i = 0; i < LatestOpenInventoryStructure.Count; i++)
+            {
+                if (!saveStructureInventory[i].isTaken) return i;
+            }
+        }
+        else if (inStructureInvetory)
         {
             for (int i = 0; i < LatestOpenInventoryStructure.Count; i++)
             {
@@ -411,7 +517,7 @@ public class InventoryManager : MonoBehaviour
     {
         for(int i = 0; i < debugItems.Count; i++)
         {
-            addItemToInvetory(debugItems[i], false);
+            addItemToInvetory(debugItems[i], false, false);
         }
     }
 }

@@ -60,7 +60,7 @@ public class CraftingStructure : MonoBehaviour
             {
                 if (playerInventory.Slots[i2].isTaken)
                 {
-                    if(Recipes[selectedRecipe].neededItems[i].id == playerInventory.Slots[i2].item.id)
+                    if(Recipes[selectedRecipe].neededItems[i] == playerInventory.Slots[i2].item)
                     {
                         if(Recipes[selectedRecipe].amount[i] <= playerInventory.Slots[i2].amount)
                         {
@@ -75,7 +75,7 @@ public class CraftingStructure : MonoBehaviour
             }
         }
         Debug.Log("yes");
-        playerInventory.addItemToInvetory(Recipes[selectedRecipe].outPutItem, true);
+        playerInventory.addItemToInvetory(Recipes[selectedRecipe].outPutItem,true, true);
         for (int i = 0; i < Recipes[selectedRecipe].neededItems.Count; i++)
         {
             playerInventory.removeitem(Recipes[selectedRecipe].neededItems[i], Recipes[selectedRecipe].amount[i]);

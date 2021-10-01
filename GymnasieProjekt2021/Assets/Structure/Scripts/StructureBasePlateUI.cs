@@ -61,6 +61,20 @@ public class StructureBasePlateUI : MonoBehaviour
             return false;
         }
     }
+    public void removeItem(int index, int amount)
+    {
+        if (amount >= Slots[index].amount)
+        {
+            Destroy(Slots[index].ImgObject);
+            Slots[index].isTaken = false;
+            Slots[index].item = null;
+            Slots[index].amount = 0;
+        }
+        else
+        {
+            Slots[index].amount -= amount;
+        }
+    }
 }
 [CustomEditor(typeof(StructureBasePlateUI))]
 public class StructureBasePlateUIInspector : Editor

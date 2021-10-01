@@ -34,8 +34,9 @@ public class ItemSpawn : MonoBehaviour
             if (Physics.Raycast(new Vector3(gameObject.transform.position.x + rnd.Next(-MapSpawnSize, MapSpawnSize), gameObject.transform.position.y, gameObject.transform.position.z + rnd.Next(-MapSpawnSize, MapSpawnSize)), -gameObject.transform.transform.up, out RaycastHit hit, 100, Layers.ground)) 
             {
                 pointsOnMap.Add(hit.point);
-            };
+            }
         }
+        Debug.Log(pointsOnMap.Count);
         return pointsOnMap;
     }
 }

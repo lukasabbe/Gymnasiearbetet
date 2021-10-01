@@ -5,6 +5,7 @@ using System;
 public class PlayerInputEventManager : MonoBehaviour {
 
     public event Action leftMouseButton;
+    public event Action<bool> leftMouseButtonHold;
     public event Action rightMouseButton;
     public event Action inventoryKey;
     public event Action scroll;
@@ -18,10 +19,11 @@ public class PlayerInputEventManager : MonoBehaviour {
 
     private void Update() {
 
-
+        leftMouseButtonHold?.Invoke(Input.GetKey(KeyCode.Mouse0));
         if (Input.anyKey)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
                 leftMouseButton?.Invoke();
             }
 

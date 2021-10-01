@@ -8,7 +8,7 @@ public class ItemGame : MonoBehaviour
 
     public void pickUpItem(GameObject player)
     {
-        player.GetComponent<InventoryManager>().addItemToInvetory((Item)Item, false);
+        player.GetComponent<InventoryManager>().addItemToInvetory((Item)Item, false,false);
         Destroy(gameObject);
     }
     /*
