@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neededItems:
   - {fileID: 11400000, guid: 04f8ee946a366d8438524e79fcc62a22, type: 2}
-  amount: 05000000
+  amount: 14000000
   outPutItem: {fileID: 11400000, guid: 4cb64099b212e1248a0d3fb3c6c92046, type: 2}

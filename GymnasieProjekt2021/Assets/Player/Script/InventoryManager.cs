@@ -44,7 +44,10 @@ public class InventoryManager : MonoBehaviour
         {
             for (int x = 0; x < xDim; x++)
             {
-                GameObject g = Instantiate(InventorySlotPanel.transform.GetChild(0).gameObject, new Vector3((((InventorySlotPanel.GetComponent<RectTransform>().rect.width/ xDim) - ofset) * x) + InventorySlotPanel.transform.GetChild(0).position.x, InventorySlotPanel.transform.GetChild(0).position.y + (y * -80), InventorySlotPanel.transform.GetChild(0).position.z), Quaternion.identity, InventorySlotPanel.transform);
+                GameObject g = Instantiate(InventorySlotPanel.transform.GetChild(0).gameObject);
+                g.transform.SetParent(InventorySlotPanel.transform,false);
+                g.transform.localPosition += new Vector3((x*60), (y*-60) , 0);
+                //GameObject g = Instantiate(InventorySlotPanel.transform.GetChild(0).gameObject, new Vector3((((InventorySlotPanel.GetComponent<RectTransform>().rect.width/ xDim) - ofset) * x) + InventorySlotPanel.transform.GetChild(0).position.x, InventorySlotPanel.transform.GetChild(0).position.y + (y * -80), InventorySlotPanel.transform.GetChild(0).position.z), Quaternion.identity, InventorySlotPanel.transform);
                 slot t = new slot();
                 t.slotGameObject = g;
                 t.slotNum = i;
