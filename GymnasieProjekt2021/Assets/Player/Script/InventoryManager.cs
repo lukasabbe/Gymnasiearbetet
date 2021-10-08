@@ -513,7 +513,9 @@ public class InventoryManager : MonoBehaviour
         g.AddComponent(typeof(Rigidbody));
         g.transform.gameObject.AddComponent(typeof(ItemGame));
         g.transform.gameObject.GetComponent<ItemGame>().Item = Slots[hotBarIndex].item;
-        g.GetComponent<Rigidbody>().AddForce(transform.forward * 3, ForceMode.Impulse);
+        Rigidbody gRigidbody = g.GetComponent<Rigidbody>();
+        gRigidbody.AddForce(transform.forward * 3, ForceMode.Impulse);
+        gRigidbody.interpolation = RigidbodyInterpolation.Extrapolate;
         removeitem(Slots[hotBarIndex].item, 1);
     }
     void addToInveotry()
