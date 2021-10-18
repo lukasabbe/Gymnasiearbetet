@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e7eb53b3805924ab664fe229cd3a05, type: 3}
+  m_Name: Thrusters Recepies
+  m_EditorClassIdentifier: 
+  neededItems:
+  - {fileID: 11400000, guid: 28da63798ad32a44980b84fbc6d63907, type: 2}
+  - {fileID: 11400000, guid: c3eacebfa4a2c7f4cb6b68685bdf59eb, type: 2}
+  amount: 0300000001000000
+  outPutItem: {fileID: 11400000, guid: e62bf117f911d5340a48a27eb14cccad, type: 2}

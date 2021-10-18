@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e7eb53b3805924ab664fe229cd3a05, type: 3}
+  m_Name: Hull recepie
+  m_EditorClassIdentifier: 
+  neededItems:
+  - {fileID: 11400000, guid: 28da63798ad32a44980b84fbc6d63907, type: 2}
+  - {fileID: 11400000, guid: e760dfce0bcac164fad1fc2162852038, type: 2}
+  - {fileID: 11400000, guid: 0113fe121bd7de94e91846725602236f, type: 2}
+  - {fileID: 11400000, guid: 51a16fca2e8b8e141aa57204697bd176, type: 2}
+  amount: 05000000030000000200000002000000
+  outPutItem: {fileID: 11400000, guid: 20a56a682040c7f469d57a1c82096c2c, type: 2}

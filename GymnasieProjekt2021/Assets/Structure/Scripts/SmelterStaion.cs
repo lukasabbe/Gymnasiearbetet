@@ -24,7 +24,10 @@ public class SmelterStaion : MonoBehaviour
     }
     private void Update()
     {
-        smeltItem();
+        if (isOn)
+        {
+            smeltItem();
+        }
     }
 
     //methods
@@ -36,7 +39,7 @@ public class SmelterStaion : MonoBehaviour
     {
         if (basePlate.Slots[0].isTaken)
         {
-            for(int i = 0; i < recipes.Count; i++)
+            for (int i = 0; i < recipes.Count; i++)
             {
                 if (recipes[i].neededItems[0] == basePlate.Slots[0].item)
                 {
@@ -53,15 +56,15 @@ public class SmelterStaion : MonoBehaviour
     {
         float Slidertimer;
         float timer = 0f;
-        while(timer <= waitTime)
+        while (timer <= waitTime)
         {
             yield return new WaitForSeconds(1);
-            Slidertimer =  timer/waitTime;
+            Slidertimer = timer / waitTime;
             timer++;
             timerSlider.value = Slidertimer;
         }
-        basePlate.removeItem(0,1);
-        basePlate.PlayerInventory.addItemToInvetory(outputitem, true,true, 1, basePlate.Slots);
+        basePlate.removeItem(0, 1);
+        basePlate.PlayerInventory.addItemToInvetory(outputitem, true, true, 1, basePlate.Slots);
         startedSmelting = true;
     }
 }

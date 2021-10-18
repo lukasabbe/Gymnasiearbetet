@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e7eb53b3805924ab664fe229cd3a05, type: 3}
+  m_Name: Computer chip Recipe
+  m_EditorClassIdentifier: 
+  neededItems:
+  - {fileID: 11400000, guid: 0113fe121bd7de94e91846725602236f, type: 2}
+  - {fileID: 11400000, guid: 3bad8f2478e603f47ba924f5e49f99cc, type: 2}
+  - {fileID: 11400000, guid: 709800adb4e89a748b39d50a76a445b0, type: 2}
+  amount: 020000000100000001000000
+  outPutItem: {fileID: 11400000, guid: c3eacebfa4a2c7f4cb6b68685bdf59eb, type: 2}
