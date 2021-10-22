@@ -162,25 +162,31 @@ public class InventoryManager : MonoBehaviour
 
         if (check < Slots.Count -1)
         {
-            Debug.Log((fromSlotNum == toSlotNum).ToString() + " and " + Slots[toSlotNum].isTaken); //fixa 
             if(fromSlotNum == toSlotNum || Slots[toSlotNum].isTaken)
             {
-                if(Slots[toSlotNum].item == Slots[fromSlotNum].item && fromSlotNum != toSlotNum)
+                if(fromSlotNum < Slots.Count - 1)
                 {
-                    if (fromSlotNum > Slots.Count - 1)
-                    {
-                        setslot(toSlotNum, LatestOpenInventoryStructure[fromSlotNum - Slots.Count],true);
-                        removeSlot(fromSlotNum);
-                    }
-                    else
+                    if (Slots[toSlotNum].item == Slots[fromSlotNum].item && fromSlotNum != toSlotNum)
                     {
                         setslot(toSlotNum, Slots[fromSlotNum], true);
                         removeSlot(fromSlotNum);
                     }
+                    else
+                    {
+                        Slots[fromSlotNum].ImgObject.transform.position = Slots[fromSlotNum].slotGameObject.transform.position;
+                    }
                 }
                 else
                 {
-                    Slots[fromSlotNum].ImgObject.transform.position = Slots[fromSlotNum].slotGameObject.transform.position;
+                    if (Slots[toSlotNum].item == LatestOpenInventoryStructure[fromSlotNum-Slots.Count].item && fromSlotNum != toSlotNum)
+                    {
+                        setslot(toSlotNum, LatestOpenInventoryStructure[fromSlotNum - Slots.Count], true);
+                        removeSlot(fromSlotNum);
+                    }
+                    else
+                    {
+                        LatestOpenInventoryStructure[fromSlotNum - Slots.Count].ImgObject.transform.position = LatestOpenInventoryStructure[fromSlotNum - Slots.Count].slotGameObject.transform.position;
+                    }
                 }
                 return false;
             }
@@ -203,22 +209,29 @@ public class InventoryManager : MonoBehaviour
         {
             if (fromSlotNum == toSlotNum || LatestOpenInventoryStructure[toSlotNum - Slots.Count].isTaken)
             {
-                if(LatestOpenInventoryStructure[toSlotNum - Slots.Count].item == LatestOpenInventoryStructure[fromSlotNum - Slots.Count].item && fromSlotNum != toSlotNum)
+                if (fromSlotNum > Slots.Count - 1)
                 {
-                    if (fromSlotNum > Slots.Count - 1)
+                    if (LatestOpenInventoryStructure[toSlotNum - Slots.Count].item == LatestOpenInventoryStructure[fromSlotNum - Slots.Count].item && fromSlotNum != toSlotNum)
                     {
                         setslot(toSlotNum, LatestOpenInventoryStructure[fromSlotNum - Slots.Count], true);
                         removeSlot(fromSlotNum);
                     }
                     else
                     {
-                        setslot(toSlotNum, Slots[fromSlotNum] ,true);
-                        removeSlot(fromSlotNum);
+                        LatestOpenInventoryStructure[fromSlotNum - Slots.Count].ImgObject.transform.position = LatestOpenInventoryStructure[fromSlotNum - Slots.Count].slotGameObject.transform.position;
                     }
                 }
                 else
                 {
-                    LatestOpenInventoryStructure[fromSlotNum - Slots.Count].ImgObject.transform.position = LatestOpenInventoryStructure[fromSlotNum - Slots.Count].slotGameObject.transform.position;
+                    if (LatestOpenInventoryStructure[toSlotNum - Slots.Count].item == Slots[fromSlotNum].item && fromSlotNum != toSlotNum)
+                    {
+                        setslot(toSlotNum, Slots[fromSlotNum], true);
+                        removeSlot(fromSlotNum);
+                    }
+                    else
+                    {
+                        Slots[fromSlotNum].ImgObject.transform.position = Slots[fromSlotNum].slotGameObject.transform.position;
+                    }
                 }
                 return false;
             }
@@ -317,8 +330,9 @@ public class InventoryManager : MonoBehaviour
     {
         if (inStructureInvetory)
         {
-            if (doItemExist(item , forceStructureInventory))
+            if (doItemExist(item , forceStructureInventory, saveStructureInventory))
             {
+                Debug.Log("yes in here");
                 if (saveStructureInventory == null) Slots[getItemIndex(item)].amount += 1;
                 else saveStructureInventory[getItemIndex(item, saveStructureInventory)].amount += 1;
             }

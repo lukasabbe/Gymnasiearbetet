@@ -15,6 +15,7 @@ public class StructureBasePlateUI : MonoBehaviour
     [HideInInspector]
     public InventoryManager PlayerInventory;
     private GameObject StructurePannel;
+    public List<specialPos> specialPoses = new List<specialPos>();
     [HideInInspector]
     public List<slot> Slots = new List<slot>();
     PlayerInputEventManager input;
@@ -36,6 +37,10 @@ public class StructureBasePlateUI : MonoBehaviour
                     Slots.Add(t);
                     i++;
                 }
+            }
+            for(int i2 = 0; i2 < specialPoses.Count; i2++)
+            {
+                Slots[specialPoses[i2].slotIndex].slotGameObject.transform.localPosition = specialPoses[i2].pos.localPosition;
             }
         }
         transform.GetChild(0).gameObject.SetActive(false);
@@ -89,4 +94,11 @@ public class StructureBasePlateUIInspector : Editor
             st.ySizeOfInventory = EditorGUILayout.IntField("Y size", st.ySizeOfInventory);
         }
     }
+}
+
+[System.Serializable]
+public class specialPos
+{
+    public Transform pos;
+    public int slotIndex;
 }

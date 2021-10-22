@@ -9,18 +9,24 @@ public class SmelterStaion : MonoBehaviour
     //GameObjects
     public GameObject isSmelterOnBtn;
     public Slider timerSlider;
+    public Text fuelAmountText;
     //scripts
     private StructureBasePlateUI basePlate;
     //vars
     public bool isOn = true;
     public float waitTime;
     private bool startedSmelting = true;
-
+    public bool useFuel;
+    private float fuleAmount;
 
     private void Start()
     {
         basePlate = GetComponent<StructureBasePlateUI>();
         isSmelterOnBtn.GetComponent<Button>().onClick.AddListener(turnOnAndOf);
+        if (!useFuel)
+        {
+            Destroy(fuelAmountText.gameObject);
+        }
     }
     private void Update()
     {
@@ -28,6 +34,7 @@ public class SmelterStaion : MonoBehaviour
         {
             smeltItem();
         }
+        addFuel();
     }
 
     //methods
@@ -35,15 +42,34 @@ public class SmelterStaion : MonoBehaviour
     {
         isOn = !isOn;
     }
+    void addFuel()
+    {
+        if (useFuel)
+        {
+            if (basePlate.Slots[2].isTaken)
+            {
+                MaterialItem it =  (MaterialItem)basePlate.Slots[2].item;
+                if (it.isFuel)
+                {
+                    for(int i = 0; i < basePlate.Slots[2].amount;i++)
+                    {
+                        fuleAmount += 5;
+                    }
+                    basePlate.removeItem(2, basePlate.Slots[2].amount);
+                    fuelAmountText.text = "Fuel amount: " + fuleAmount;
+                }
+            }
+        }
+    }
     void smeltItem()
     {
-        if (basePlate.Slots[0].isTaken)
+        if ((startedSmelting && fuleAmount > 0) || (startedSmelting && useFuel == false))
         {
-            for (int i = 0; i < recipes.Count; i++)
+            if (basePlate.Slots[0].isTaken)
             {
-                if (recipes[i].neededItems[0] == basePlate.Slots[0].item)
+                for (int i = 0; i < recipes.Count; i++)
                 {
-                    if (startedSmelting)
+                    if (recipes[i].neededItems[0] == basePlate.Slots[0].item)
                     {
                         StartCoroutine(smelterTimmer(recipes[i].outPutItem));
                         startedSmelting = false;
@@ -56,6 +82,7 @@ public class SmelterStaion : MonoBehaviour
     {
         float Slidertimer;
         float timer = 0f;
+        basePlate.removeItem(0, 1);
         while (timer <= waitTime)
         {
             yield return new WaitForSeconds(1);
@@ -63,8 +90,12 @@ public class SmelterStaion : MonoBehaviour
             timer++;
             timerSlider.value = Slidertimer;
         }
-        basePlate.removeItem(0, 1);
         basePlate.PlayerInventory.addItemToInvetory(outputitem, true, true, 1, basePlate.Slots);
+        if (useFuel)
+        {
+            fuleAmount--;
+            fuelAmountText.text = "Fuel amount: " + fuleAmount;
+        }
         startedSmelting = true;
     }
 }
