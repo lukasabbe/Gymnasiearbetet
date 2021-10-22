@@ -5,6 +5,7 @@ using System;
 public class PlayerInputEventManager : MonoBehaviour {
 
     public event Action leftMouseButton;
+    public event Action leftMouseButtonUp;
     public event Action<bool> leftMouseButtonHold;
     public event Action rightMouseButton;
     public event Action inventoryKey;
@@ -20,12 +21,20 @@ public class PlayerInputEventManager : MonoBehaviour {
     private void Update() {
 
         leftMouseButtonHold?.Invoke(Input.GetKey(KeyCode.Mouse0));
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
+                leftMouseButtonUp?.Invoke();
+            }
+
         if (Input.anyKey)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 leftMouseButton?.Invoke();
             }
+
+
 
             if (Input.GetKeyDown(KeyCode.Mouse1)){
                 rightMouseButton?.Invoke();
@@ -58,10 +67,6 @@ public class PlayerInputEventManager : MonoBehaviour {
             if(Input.GetKeyDown(KeyCode.E))
             {
                 openStructKey?.Invoke();
-            }
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
                 pickUpItemKey?.Invoke();
             }
 

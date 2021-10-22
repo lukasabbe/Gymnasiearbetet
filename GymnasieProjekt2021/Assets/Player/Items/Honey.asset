@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbcad64163c23d841b76bbade61011b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 98d4caf9ed3bea445962f0d766cfd76b, type: 3}
   m_Name: Honey
   m_EditorClassIdentifier: 
-  id: 9
+  id: 
   ItemName: Honey
-  description: 'Mmm... '
-  Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  description: Mmm...
+  Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   gameobj: {fileID: 0}
-  itemType: 2
+  itemType: 0
+  timeToEat: 0.5
+  healthRecover: 50
+  foodRecover: 0
