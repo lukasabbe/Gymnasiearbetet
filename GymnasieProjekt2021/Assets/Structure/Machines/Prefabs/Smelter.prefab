@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 2839241337478783995}
   - component: {fileID: -5525359042266038234}
   - component: {fileID: 5732229586802546030}
+  - component: {fileID: 5270712113269970123}
   m_Layer: 16
   m_Name: Smelter
   m_TagString: Untagged
@@ -499,6 +500,21 @@ MonoBehaviour:
   timerSlider: {fileID: 4144404071260115523}
   isOn: 1
   waitTime: 10
+--- !u!114 &5270712113269970123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6860881175809739734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e2aef73b5ab33a49b2c7b0996ce97b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGenerator: 0
+  electricPerMin: 0
+  StructerHasElectry: 0
 --- !u!1 &8132787959325203978
 GameObject:
   m_ObjectHideFlags: 0

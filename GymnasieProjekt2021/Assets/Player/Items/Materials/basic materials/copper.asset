@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbcad64163c23d841b76bbade61011b5, type: 3}
-  m_Name: Iron_ingot
+  m_Name: copper
   m_EditorClassIdentifier: 
-  id: 9
-  ItemName: iron ingot
-  description: test
-  Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  id: 
+  ItemName: copper
+  description: 
+  Sprite: {fileID: 0}
   gameobj: {fileID: 0}
   itemType: 2
+  isFuel: 0

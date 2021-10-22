@@ -6,23 +6,23 @@ public class ElectricSystem : MonoBehaviour
 {
     public bool isGenerator;
     public int electricPerMin;
-
-    private int electricGroupIndex;
+    [HideInInspector]
+    public int electricGroupIndex;
 
     public bool StructerHasElectry;
     private void Start()
     {
-        ElectricStructre electric = new ElectricStructre(isGenerator, electricPerMin);
+        ElectricStructre electric = new ElectricStructre(isGenerator, electricPerMin, this);
         staticElectricSystem.addNewStructure(electric);
         electricGroupIndex = staticElectricSystem.electricGroups.Count - 1;
-        StructerHasElectry = staticElectricSystem.electricGroups[electricGroupIndex].hasEnergy();
+        staticElectricSystem.electricGroups[electricGroupIndex].hasEnergy();
     }
 
     public void connectWire(int groupindexToConectTo)
     {
         staticElectricSystem.changeGruop(electricGroupIndex, groupindexToConectTo);
         electricGroupIndex = groupindexToConectTo;
-        StructerHasElectry = staticElectricSystem.electricGroups[electricGroupIndex].hasEnergy();
+        staticElectricSystem.electricGroups[electricGroupIndex].hasEnergy();
     }
 }
 
@@ -56,7 +56,7 @@ public class ElectricGroup
 {
     public List<ElectricStructre> electricStructres = new List<ElectricStructre>();
     public int amountOfEnergy;
-    public bool hasEnergy()
+    public void hasEnergy()
     {
         int amount = 0;
         for(int i = 0; i< electricStructres.Count; i++)
@@ -66,9 +66,12 @@ public class ElectricGroup
         amountOfEnergy = amount;
         if(amount >= 0)
         {
-            return true;
+            for (int i = 0; i < electricStructres.Count; i++) electricStructres[i].structureSystem.StructerHasElectry = true;
         }
-        else return false;
+        else
+        {
+            for (int i = 0; i < electricStructres.Count; i++) electricStructres[i].structureSystem.StructerHasElectry = false;
+        }
     }
 }
 
@@ -83,9 +86,12 @@ public class ElectricStructre
 
     public int groupindex;
 
-    public ElectricStructre(bool isGenerator, int electricPerMin)
+    public ElectricSystem structureSystem;
+
+    public ElectricStructre(bool isGenerator, int electricPerMin , ElectricSystem structureSystem )
     {
         this.isGenerator = isGenerator;
         this.electricPerMin = electricPerMin;
+        this.structureSystem = structureSystem;
     }
 }

@@ -16,6 +16,7 @@ public class PlayerInputEventManager : MonoBehaviour {
     public event Action openStructKey;
     public event Action dropKey;
     public event Action pickUpItemKey;
+    public event Action connectWiresKey;
     public event Action<int> onHotBarDelta;
 
     private void Update() {
@@ -73,6 +74,11 @@ public class PlayerInputEventManager : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 dropKey?.Invoke();
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                connectWiresKey?.Invoke();
             }
 
             for(int i = 0; i < 10; i++)

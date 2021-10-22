@@ -5,17 +5,42 @@ using UnityEngine;
 public class StuctureFinder : MonoBehaviour
 {
     private List<StructureBasePlateUI> OpenInventorys = new List<StructureBasePlateUI>();
+    public GameObject Structer1 = null;
+    public GameObject Structer2 = null;
+
     private void Start()
     {
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
         input.openStructKey += openStructure;
         input.pickUpItemKey += pickupItems;
+        input.connectWiresKey += connectWire;
     }
     void pickupItems()
     {
         if(Physics.SphereCast(GameManager.playerCamera.transform.position, 0.3f, GameManager.playerCamera.transform.forward, out RaycastHit ray , 3 , Layers.item))
         {
             ray.transform.GetComponent<ItemGame>().pickUpItem(GameManager.player);
+        }
+    }
+
+    void connectWire()
+    {
+        if (Physics.SphereCast(GameManager.playerCamera.transform.position, 0.3f, GameManager.playerCamera.transform.forward, out RaycastHit ray, 3, Layers.structure))
+        {
+            if(Structer1 == null)
+            {
+                Structer1 = ray.transform.gameObject;
+            }
+            else
+            {
+                Structer2 = ray.transform.gameObject;
+            }
+        }
+        if(Structer1 != null && Structer2 != null)
+        {
+            Structer1.transform.GetComponent<ElectricSystem>().connectWire(Structer2.transform.GetComponent<ElectricSystem>().electricGroupIndex);
+            Structer1 = null;
+            Structer2 = null;
         }
     }
 

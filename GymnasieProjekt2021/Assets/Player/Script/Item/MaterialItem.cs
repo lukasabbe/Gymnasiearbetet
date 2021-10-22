@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MaterialItem", menuName = "ScriptableObjects/items/new MaterialItem")]
 public class MaterialItem : Item
 {
+    public bool isFuel = false;
     private void OnEnable()
     {
         itemType = ItemType.Material;

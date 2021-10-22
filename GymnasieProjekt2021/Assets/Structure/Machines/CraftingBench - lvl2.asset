@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41e7ecf0b97367d499d223aebbffd863, type: 3}
-  m_Name: CraftingBench
+  m_Name: CraftingBench - lvl2
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0}
   Dimensions: {x: 1, y: 1, z: 1}
-  gameObject: {fileID: 6795666258531850313, guid: 429bf7a887bc7054a9526bf1b64c4d76, type: 3}
+  gameObject: {fileID: 1817466973903060074, guid: 87e0ae312b4860d4bbff69c731815660, type: 3}

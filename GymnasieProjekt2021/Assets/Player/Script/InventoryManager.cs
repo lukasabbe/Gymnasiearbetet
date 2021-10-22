@@ -165,7 +165,7 @@ public class InventoryManager : MonoBehaviour
             Debug.Log((fromSlotNum == toSlotNum).ToString() + " and " + Slots[toSlotNum].isTaken); //fixa 
             if(fromSlotNum == toSlotNum || Slots[toSlotNum].isTaken)
             {
-                if(Slots[toSlotNum].item == Slots[fromSlotNum].item)
+                if(Slots[toSlotNum].item == Slots[fromSlotNum].item && fromSlotNum != toSlotNum)
                 {
                     if (fromSlotNum > Slots.Count - 1)
                     {
@@ -203,7 +203,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (fromSlotNum == toSlotNum || LatestOpenInventoryStructure[toSlotNum - Slots.Count].isTaken)
             {
-                if(LatestOpenInventoryStructure[toSlotNum - Slots.Count].item == LatestOpenInventoryStructure[fromSlotNum - Slots.Count].item)
+                if(LatestOpenInventoryStructure[toSlotNum - Slots.Count].item == LatestOpenInventoryStructure[fromSlotNum - Slots.Count].item && fromSlotNum != toSlotNum)
                 {
                     if (fromSlotNum > Slots.Count - 1)
                     {
