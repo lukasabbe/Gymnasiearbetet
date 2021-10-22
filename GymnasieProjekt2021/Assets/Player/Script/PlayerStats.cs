@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class PlayerStats
 {
+    public static float MaxHP;
     public static float HP;
     public static float FoodLevel;
 }

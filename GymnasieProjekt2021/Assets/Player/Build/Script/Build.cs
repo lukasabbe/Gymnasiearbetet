@@ -24,17 +24,16 @@ public class Build : MonoBehaviour{
 
     HotbarHandler hotbarScript;
 
-    void OnEnable() 
-    {
-        PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
+    PlayerInputEventManager input;
+    void OnEnable() {
+        input = FindObjectOfType<PlayerInputEventManager>();
 
         input.leftMouseButton += OnLeftClick;
         input.rightMouseButton += OnRightClick;
         input.scroll += OnScrollDelta;
     }
-    void OnDisable()
-    {
-        PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
+    void OnDisable(){
+        input = FindObjectOfType<PlayerInputEventManager>();
 
         input.leftMouseButton -= OnLeftClick;
         input.rightMouseButton -= OnRightClick;

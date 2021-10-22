@@ -81,6 +81,7 @@ public class StructureBasePlateUI : MonoBehaviour
         }
     }
 }
+
 [CustomEditor(typeof(StructureBasePlateUI))]
 public class StructureBasePlateUIInspector : Editor
 {
