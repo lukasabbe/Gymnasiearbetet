@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e7eb53b3805924ab664fe229cd3a05, type: 3}
+  m_Name: Steel_fuserRecepie
+  m_EditorClassIdentifier: 
+  neededItems:
+  - {fileID: 11400000, guid: a39cc95a170b94e488d0e4206585f670, type: 2}
+  - {fileID: 11400000, guid: f7f9b7230e91dd34f81eb57fc4d8982f, type: 2}
+  amount: 0100000001000000
+  outPutItem: {fileID: 11400000, guid: 28da63798ad32a44980b84fbc6d63907, type: 2}

@@ -18,6 +18,7 @@ public class AIManeger : MonoBehaviour
     public int viewAngle;
     public AiStages stage;
     public NavMeshAgent agent;
+    public float attackRange;
 
     //privete variables
 
@@ -41,6 +42,7 @@ public class AIManeger : MonoBehaviour
                 break;
             case AiStages.attacking:
                 startRoming = true;
+                following();
                 break;
         }
     }
@@ -68,8 +70,27 @@ public class AIManeger : MonoBehaviour
         }
         else
         {
-            agent.SetDestination(Player.position);
-            agent.transform.LookAt(Player);
+            if(Vector3.Distance(Player.position , transform.position) <= attackRange)
+            {
+                if (!AIseePlayer())
+                {
+                    stage = AiStages.following;
+                    agent.SetDestination(Player.position);
+                    agent.transform.LookAt(Player);
+                }
+                else
+                {
+                    stage = AiStages.attacking;
+                    agent.SetDestination(transform.position);
+                    agent.transform.LookAt(Player);
+                }
+            }
+            else
+            {
+                stage = AiStages.following;
+                agent.SetDestination(Player.position);
+                agent.transform.LookAt(Player);
+            }
         }
         seePlayer = AIseePlayer();
     }
