@@ -23,7 +23,7 @@ public class MineScript : MonoBehaviour
     }
     void mine()
     {
-        if (Physics.Raycast(GameManager.playerCamera.transform.position, GameManager.playerCamera.transform.forward, out RaycastHit ray, 3, Layers.mineresource))
+        if (Physics.Raycast(GameManager.playerCamera.transform.position, GameManager.playerCamera.transform.forward, out RaycastHit ray, 3, Layers.resource))
         {
             mineTime -= Time.deltaTime;
             if(mineTime <= 0)

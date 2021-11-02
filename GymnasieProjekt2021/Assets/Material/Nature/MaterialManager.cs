@@ -5,5 +5,7 @@ using UnityEngine;
 public class MaterialManager : MonoBehaviour
 {
     [HideInInspector] public enum MaterialType { Wood, Rock };
-    [HideInInspector] public int equipmentTeirRequired;
+    public MaterialType materialType;
+    public int equipmentTeirRequired;
+    public int health;
 }

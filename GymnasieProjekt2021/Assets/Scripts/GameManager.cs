@@ -11,5 +11,5 @@ public static class Layers{
     public static int ground = 1 << 12;
     public static int structure = 1 << 16;
     public static int item = 1 << 21;
-    public static int mineresource = 1 << 9;
+    public static int resource = 1 << 9;
 }
