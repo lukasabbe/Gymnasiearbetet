@@ -32,9 +32,19 @@ public class DragInventory : MonoBehaviour , IPointerDownHandler , IBeginDragHan
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        isItemInfoOn = true;
-        dragOn = true;
-        InfoPanel(eventData);
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            isItemInfoOn = true;
+            dragOn = true;
+            InfoPanel(eventData);
+        }
+        else if (Input.GetKey(KeyCode.Mouse1))
+        {
+            isItemInfoOn = true;
+            dragOn = true;
+            InfoPanel(eventData);
+            startPos = invtory.splitStack(startPos);
+        }
     }
 
     public void OnDrag(PointerEventData eventData)

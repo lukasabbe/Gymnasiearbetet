@@ -109,6 +109,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 7664012108186557205}
+  - {fileID: 3107063839260684138}
+  - {fileID: 3470749217560130854}
   m_Father: {fileID: 2121930363526710891}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -177,6 +179,36 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &1386136999172294411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3107063839260684138}
+  m_Layer: 0
+  m_Name: FuleSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3107063839260684138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386136999172294411}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.8, y: -21.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3209759545070885197}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2793347821968757916
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,7 +415,7 @@ GameObject:
   - component: {fileID: 5732229586802546030}
   - component: {fileID: 5270712113269970123}
   m_Layer: 16
-  m_Name: Smelter
+  m_Name: Smelter - lvl 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -479,9 +511,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasInventory: 1
-  xSizeOfInventory: 2
+  xSizeOfInventory: 3
   ySizeOfInventory: 1
   PlayerInventory: {fileID: 0}
+  specialPoses:
+  - pos: {fileID: 3107063839260684138}
+    slotIndex: 2
 --- !u!114 &5732229586802546030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,8 +533,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f1aa0dd843ce4d4581a68d70cd40e6b, type: 2}
   isSmelterOnBtn: {fileID: 8994347063220982412}
   timerSlider: {fileID: 4144404071260115523}
+  fuelAmountText: {fileID: 6789534947786621748}
   isOn: 1
   waitTime: 10
+  useFuel: 1
 --- !u!114 &5270712113269970123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGenerator: 0
   electricPerMin: 0
+  electricGroupIndex: 0
   StructerHasElectry: 0
 --- !u!1 &8132787959325203978
 GameObject:
@@ -549,7 +587,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -38.5, y: -0.0000061989}
+  m_AnchoredPosition: {x: -48.1, y: -0.000005722}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6188738851314877130
@@ -587,6 +625,87 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!1 &8459821866990185991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3470749217560130854}
+  - component: {fileID: 437694876106588152}
+  - component: {fileID: 6789534947786621748}
+  m_Layer: 16
+  m_Name: FuleText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3470749217560130854
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8459821866990185991}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3209759545070885197}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -6, y: -54.7}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &437694876106588152
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8459821866990185991}
+  m_CullTransparentMesh: 0
+--- !u!114 &6789534947786621748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8459821866990185991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 290
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Fuel amount: 0
+
+'
 --- !u!1 &8573031372677581739
 GameObject:
   m_ObjectHideFlags: 0

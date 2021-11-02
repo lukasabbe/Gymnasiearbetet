@@ -8,6 +8,8 @@ public class StuctureFinder : MonoBehaviour
     public GameObject Structer1 = null;
     public GameObject Structer2 = null;
 
+    public GameObject wire;
+
     private void Start()
     {
         PlayerInputEventManager input = FindObjectOfType<PlayerInputEventManager>();
@@ -39,6 +41,12 @@ public class StuctureFinder : MonoBehaviour
         if(Structer1 != null && Structer2 != null)
         {
             Structer1.transform.GetComponent<ElectricSystem>().connectWire(Structer2.transform.GetComponent<ElectricSystem>().electricGroupIndex);
+            float xLenght = Mathf.Abs(Structer1.transform.position.x - Structer2.transform.position.x);
+            float zLenght = Mathf.Abs(Structer1.transform.position.z - Structer2.transform.position.z);
+            GameObject g = Instantiate(wire, Structer1.transform.position, Quaternion.Euler(0, -Mathf.Atan(zLenght / xLenght) * Mathf.Rad2Deg, 90));
+            Debug.Log(Mathf.Sqrt(Mathf.Pow(xLenght, 2) + Mathf.Pow(zLenght, 2)));
+            g.transform.localScale += new Vector3(0, Mathf.Sqrt(Mathf.Pow(xLenght, 2) + Mathf.Pow(zLenght, 2))/2, 0);
+            g.transform.position = new Vector3((Structer1.transform.position.x + Structer2.transform.position.x)/2, 1, (Structer1.transform.position.z + Structer2.transform.position.z) / 2);
             Structer1 = null;
             Structer2 = null;
         }
