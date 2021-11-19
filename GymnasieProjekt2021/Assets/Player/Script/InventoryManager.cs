@@ -554,6 +554,7 @@ public class InventoryManager : MonoBehaviour
         if (Inventory.activeSelf)
         {
             Inventory.SetActive(false);
+            ItemInfo.SetActive(false);
             MovmentStates.States = MovementState.walking;
             Cursor.lockState = CursorLockMode.Locked;
         }

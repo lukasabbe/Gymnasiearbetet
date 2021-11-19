@@ -13,6 +13,7 @@ public class SmelterStaion : MonoBehaviour
     public Text fuelAmountText;
     public GameObject modeBtn;
     public Text modeText;
+    public GameObject disable;
     //scripts
     private StructureBasePlateUI basePlate;
     //vars
@@ -35,6 +36,7 @@ public class SmelterStaion : MonoBehaviour
         {
             modeBtn.GetComponent<Button>().onClick.AddListener(changeMode);
             uppdateModeText();
+            disable.SetActive(false);
         }
     }
     private void Update()

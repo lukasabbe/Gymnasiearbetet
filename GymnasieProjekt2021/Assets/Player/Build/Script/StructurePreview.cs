@@ -12,9 +12,10 @@ public static class StructurePreview{
         if (preview.activeSelf){
             preview.transform.position = _buildPosition;
             preview.transform.rotation = _buildRotation;
-
+            /*
             if (_validPosition && _validRotation) preview.GetComponent<Renderer>().material = _validMaterial;
             else preview.GetComponent<Renderer>().material = _invalidMaterial;
+            */
         }
 
         bool isActive = _ray.point == Vector3.zero ? false : true;

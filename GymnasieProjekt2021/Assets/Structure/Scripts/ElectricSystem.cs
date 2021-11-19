@@ -46,9 +46,8 @@ public static class staticElectricSystem
         electricGroups[oldGruop].electricStructres.Clear();
     }
 
-    public static void reloadElectricSystem()
+    public static void reloadElectricSystem(int gruopNum)
     {
-        
     }
 }
 
@@ -61,8 +60,9 @@ public class ElectricGroup
         int amount = 0;
         for(int i = 0; i< electricStructres.Count; i++)
         {
-            amount += electricStructres[i].electricPerMin;
+            amount += electricStructres[i].structureSystem.electricPerMin;
         }
+        Debug.Log("has Energy check" + amount);
         amountOfEnergy = amount;
         if(amount >= 0)
         {
